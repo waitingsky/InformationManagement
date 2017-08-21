@@ -16,7 +16,7 @@ public class Information {
 	
 	private int type = 0; // 0 normal;1 attachment;2 link
 	
-	private boolean click;
+	private int clickCount;
 	private boolean head;
 	private boolean hot;
 
@@ -90,12 +90,12 @@ public class Information {
 		this.type = type;
 	}
 
-	public boolean isClick() {
-		return click;
+	public int getClickCount() {
+		return clickCount;
 	}
 
-	public void setClick(boolean click) {
-		this.click = click;
+	public void setClickCount(int clickCount) {
+		this.clickCount = clickCount;
 	}
 
 	public boolean isHead() {

@@ -42,7 +42,7 @@
 		
 		var newAttach="<li id='li"+tmpId+"' class=''>"
 		+"<span class='add-on'><i class='icon-file'></i></span>"
-		+"<input type='file'/>"
+		+"<input type='file' id='file"+tmpId+"' name='file"+tmpId+"'/>"
 		+"<button class='btn' type='button' onclick='removeAttachment("+tmpId+")'>-</button>"
 		+"</li>";              
 		$("#attachment").append(newAttach); 
@@ -53,40 +53,40 @@
 	}
 	
 	function checkForm(){
-		var title=document.getElementById("title").value;
-		var author=document.getElementById("author").value;
-		var channelId=document.getElementById("channelId").value;
-		var content=CKEDITOR.instances.content.getData();
-		var type=$('input[name="optionsRadios"]:checked').val();
+// 		var title=document.getElementById("title").value;
+// 		var author=document.getElementById("author").value;
+// 		var channelId=document.getElementById("channelId").value;
+// 		var content=CKEDITOR.instances.content.getData();
+// 		var type=$('input[name="optionsRadios"]:checked').val();
 
-		if(title==null||title==""){
-			document.getElementById("error").innerHTML="资讯标题不能为空！";
-			return false;
-		}
-		if(author==null||author==""){
-			document.getElementById("error").innerHTML="作者不能为空！";
-			return false;
-		}
-		if(channelId==null||channelId==""){
-			document.getElementById("error").innerHTML="请选择频道！";
-			return false;
-		}
-		if(type==null||type==""){
-			document.getElementById("error").innerHTML="请选择资讯类别！";
-			return false;
-		}
+// 		if(title==null||title==""){
+// 			document.getElementById("error").innerHTML="资讯标题不能为空！";
+// 			return false;
+// 		}
+// 		if(author==null||author==""){
+// 			document.getElementById("error").innerHTML="作者不能为空！";
+// 			return false;
+// 		}
+// 		if(channelId==null||channelId==""){
+// 			document.getElementById("error").innerHTML="请选择频道！";
+// 			return false;
+// 		}
+// 		if(type==null||type==""){
+// 			document.getElementById("error").innerHTML="请选择资讯类别！";
+// 			return false;
+// 		}
 		
-		if(type=="0"){
-			// normal
-			if(content==null||content==""){
-				document.getElementById("error").innerHTML="资讯内容不能为空！";
-				return false;
-			}
-		}else if(type=="1"){
-			// attachment
-		}else if(type=="2"){
-			// link
-		}
+// 		if(type=="0"){
+// 			// normal
+// 			if(content==null||content==""){
+// 				document.getElementById("error").innerHTML="资讯内容不能为空！";
+// 				return false;
+// 			}
+// 		}else if(type=="1"){
+// 			// attachment
+// 		}else if(type=="2"){
+// 			// link
+// 		}
 		
 		return true;
 	}
@@ -98,7 +98,7 @@
 		${navCode}
 	</div>
 	<div class="data_content">
-		<form action="information?action=save" method="post" enctype="multipart/form-data" onsubmit="return checkForm()">
+		<form action="information?action=save" method="post" enctype="multipart/form-data" onsubmit="return checkForm()" id="">
 			<table cellpadding="5" width="100%">
 				<tr>
 					<td width="80px">
@@ -108,76 +108,76 @@
 						<input type="text" id="title" name="title" class="input-xxlarge" value="${information.title }"/>
 					</td>
 				</tr>
-				<tr>
-					<td>
-						<label>资讯作者：</label>
-					</td>
-					<td>
-						<input type="text" id="author" name="author" value="${information.author }"/>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label>资讯频道：</label>
-					</td>
-					<td>
-						<select id="channelId" name="channelId">
-							<option value="">请选择资讯频道</option>
-							<c:forEach var="tmpChannel" items="${channelList }">
-								<option value="${tmpChannel.channelId }" ${tmpChannel.channelId==information.channelId?'selected':'' }>${tmpChannel.channelName }</option>
-							</c:forEach>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label>资讯属性：</label>
-					</td>
-					<td>
-						<label class="radio inline">
-						  <input type="radio" name="optionsRadios" id="typeInfoNormal" value="0" onclick="checkTypeChange()" ${information.type==0?'checked':''}>
-						  新闻类
-						</label>
-						<label class="radio inline">
-						  <input type="radio" name="optionsRadios" id="typeInfoAttach" value="1" onclick="checkTypeChange()" ${information.type==1?'checked':''}>
-						  档案类
-						</label>
-						<label class="radio inline">
-						  <input type="radio" name="optionsRadios" id="typeInfoLink" value="2" onclick="checkTypeChange()" ${information.type==2?'checked':''}>
-						  链接类
-						</label>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label>资讯类别：</label>
-					</td>
-					<td>
+<!-- 				<tr> -->
+<!-- 					<td> -->
+<!-- 						<label>资讯作者：</label> -->
+<!-- 					</td> -->
+<!-- 					<td> -->
+<%-- 						<input type="text" id="author" name="author" value="${information.author }"/> --%>
+<!-- 					</td> -->
+<!-- 				</tr> -->
+<!-- 				<tr> -->
+<!-- 					<td> -->
+<!-- 						<label>资讯频道：</label> -->
+<!-- 					</td> -->
+<!-- 					<td> -->
+<!-- 						<select id="channelId" name="channelId"> -->
+<!-- 							<option value="">请选择资讯频道</option> -->
+<%-- 							<c:forEach var="tmpChannel" items="${channelList }"> --%>
+<%-- 								<option value="${tmpChannel.channelId }" ${tmpChannel.channelId==information.channelId?'selected':'' }>${tmpChannel.channelName }</option> --%>
+<%-- 							</c:forEach> --%>
+<!-- 						</select> -->
+<!-- 					</td> -->
+<!-- 				</tr> -->
+<!-- 				<tr> -->
+<!-- 					<td> -->
+<!-- 						<label>资讯属性：</label> -->
+<!-- 					</td> -->
+<!-- 					<td> -->
+<!-- 						<label class="radio inline"> -->
+<%-- 						  <input type="radio" name="optionsRadios" id="typeInfoNormal" value="0" onclick="checkTypeChange()" ${information.type==0?'checked':''}> --%>
+<!-- 						  新闻类 -->
+<!-- 						</label> -->
+<!-- 						<label class="radio inline"> -->
+<%-- 						  <input type="radio" name="optionsRadios" id="typeInfoAttach" value="1" onclick="checkTypeChange()" ${information.type==1?'checked':''}> --%>
+<!-- 						  档案类 -->
+<!-- 						</label> -->
+<!-- 						<label class="radio inline"> -->
+<%-- 						  <input type="radio" name="optionsRadios" id="typeInfoLink" value="2" onclick="checkTypeChange()" ${information.type==2?'checked':''}> --%>
+<!-- 						  链接类 -->
+<!-- 						</label> -->
+<!-- 					</td> -->
+<!-- 				</tr> -->
+<!-- 				<tr> -->
+<!-- 					<td> -->
+<!-- 						<label>资讯类别：</label> -->
+<!-- 					</td> -->
+<!-- 					<td> -->
+<!-- <!-- 						<label class="checkbox inline"> --> -->
+<%-- <%-- 						  <input type="checkbox" id="isHead" name="isHead" value="1" ${information.isHead==1?'checked':'' }>头条 --%> --%>
+<!-- <!-- 						</label> --> -->
+<!-- <!-- 						<label class="checkbox inline"> --> -->
+<%-- <%-- 						  <input type="checkbox" id="isHot" name="isHot" value="1" ${information.isHot==1?'checked':'' }>热点 --%> --%>
+<!-- <!-- 						</label> --> -->
+
 <!-- 						<label class="checkbox inline"> -->
-<%-- 						  <input type="checkbox" id="isHead" name="isHead" value="1" ${information.isHead==1?'checked':'' }>头条 --%>
+<%-- 						  <input type="checkbox" id="isHead" name="isHead" value="1" ${information.head?'checked':'' }>头条 --%>
 <!-- 						</label> -->
 <!-- 						<label class="checkbox inline"> -->
-<%-- 						  <input type="checkbox" id="isHot" name="isHot" value="1" ${information.isHot==1?'checked':'' }>热点 --%>
+<%-- 						  <input type="checkbox" id="isHot" name="isHot" value="1" ${information.hot?'checked':'' }>热点 --%>
 <!-- 						</label> -->
 
-						<label class="checkbox inline">
-						  <input type="checkbox" id="isHead" name="isHead" value="1" ${information.head?'checked':'' }>头条
-						</label>
-						<label class="checkbox inline">
-						  <input type="checkbox" id="isHot" name="isHot" value="1" ${information.hot?'checked':'' }>热点
-						</label>
-
-					</td>
-				</tr>
+<!-- 					</td> -->
+<!-- 				</tr> -->
 				
-				<tr id="typeNormalContent">
-					<td valign="top">
-						<label>资讯内容：</label>
-					</td>
-					<td>
-						<textarea class="ckeditor" id="content" name="content">${information.type==0?information.content:'' }</textarea>
-					</td>
-				</tr>
+<!-- 				<tr id="typeNormalContent"> -->
+<!-- 					<td valign="top"> -->
+<!-- 						<label>资讯内容：</label> -->
+<!-- 					</td> -->
+<!-- 					<td> -->
+<%-- 						<textarea class="ckeditor" id="content" name="content">${information.type==0?information.content:'' }</textarea> --%>
+<!-- 					</td> -->
+<!-- 				</tr> -->
 				
 				<tr id="typeNormalAttachment" style="">
 					<td>
@@ -191,7 +191,9 @@
 					</td>
 				</tr>
 				
-				<tr id="typeFile" style="display: none">
+<!-- 				<tr id="typeFile" style="display: none"> -->
+				<tr id="typeFile" style=" ">
+
 					<td>
 						<label>文件：</label>
 					</td>
@@ -199,23 +201,26 @@
 						<ul class="nav nav-list" id="attachment">
 						  <li class="">
 						  	<span class="add-on"><i class="icon-file"></i></span>
-						  	<input type="file" id="attachment" name="attachment" />
+						  	<input type="file" id="docFile" name="docFile" value="123.txt"></input>
 						  </li>
 						</ul>
-						
+					
+					<input type="file" name="picpath" id="picpath" style="display:none;" onChange="path.value=this.value"> 
+					<input name="path" readonly>
+					<input type="button" value="上传照片" onclick="picpath.click()">	
 <!-- 						<input type="file" id="picFile" name="picFile" /> -->
 <%-- 					<input type="text" id="imageName" name="imageName" value="${information.imageName }"/> --%>
 					</td>
 				</tr>
 				
-				<tr id="typeLink" style="display: none">
-					<td>
-						<label>链接地址：</label>
-					</td>
-					<td>
-						<input type="text" id="infoLink" name="infoLink" value="${information.type==2?information.content:'' }"  class="input-xxlarge"/>
-					</td>
-				</tr>
+<!-- 				<tr id="typeLink" style="display: none"> -->
+<!-- 					<td> -->
+<!-- 						<label>链接地址：</label> -->
+<!-- 					</td> -->
+<!-- 					<td> -->
+<%-- 						<input type="text" id="infoLink" name="infoLink" value="${information.type==2?information.content:'' }"  class="input-xxlarge"/> --%>
+<!-- 					</td> -->
+<!-- 				</tr> -->
 				
 				<tr>
 					<td>
@@ -242,23 +247,23 @@
 </body>
 </html>
 <script>
-	if('${information.type}'==0){
-		$("#typeNormalContent").show();
-		$("#typeNormalAttachment").show();
+// 	if('${information.type}'==0){
+// 		$("#typeNormalContent").show();
+// 		$("#typeNormalAttachment").show();
 		
-		$("#typeFile").hide();
-		$("#typeLink").hide();
-	}else if('${information.type}'==1){
-		$("#typeFile").show();
+// 		$("#typeFile").hide();
+// 		$("#typeLink").hide();
+// 	}else if('${information.type}'==1){
+// 		$("#typeFile").show();
 		
-		$("#typeNormalContent").hide();
-		$("#typeNormalAttachment").hide();
-		$("#typeLink").hide();
-	}else if('${information.type}'==2){
-		$("#typeLink").show();
+// 		$("#typeNormalContent").hide();
+// 		$("#typeNormalAttachment").hide();
+// 		$("#typeLink").hide();
+// 	}else if('${information.type}'==2){
+// 		$("#typeLink").show();
 		
-		$("#typeNormalContent").hide();
-		$("#typeNormalAttachment").hide();
-		$("#typeFile").hide();
-	}
+// 		$("#typeNormalContent").hide();
+// 		$("#typeNormalAttachment").hide();
+// 		$("#typeFile").hide();
+// 	}
 </script>

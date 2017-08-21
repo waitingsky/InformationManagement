@@ -219,7 +219,8 @@ public class InformationServlet extends HttpServlet {
 //						// }
 //						// }
 					} else  {
-//						String itemName = item.getName();
+						String itemName = item.getName();
+						System.out.println(itemName);
 //						
 //						if (!"".equals(itemName)){
 //							String imageName = DateUtil.getCurrentDateStr();
@@ -231,14 +232,42 @@ public class InformationServlet extends HttpServlet {
 					}
 				}
 				
-				
-				Information information = new Information();
-				if (information.getInformationId() != 0) {
-					InformationBO.getInstance().update(information);
-				} else {
-					InformationBO.getInstance().save(information);
-				}
-				ApplicationBO.getInstance().refreshApplication(request.getSession().getServletContext());
+//				Information information = new Information();
+//				
+//				if (StringUtil.isNotEmpty(map.get("informationId"))) {
+//					information.setInformationId(Integer.parseInt(map.get("informationId")));
+//				}
+//				
+//				information.setTitle(map.get("title"));
+//				information.setContent(map.get("content"));
+//				information.setAuthor(map.get("author"));
+//				information.setChannelId(Integer.parseInt(map.get("channelId")));
+//
+//				information.setHead(Integer.parseInt(map.get("isHead")) == 1 ? true : false);
+//				information.setHot(Integer.parseInt(map.get("isHot")) == 1 ? true : false);
+//				information.setType(Integer.parseInt(map.get("optionsRadios")));
+//
+//				// if ("isHead".equals(fieldName)) {
+//				// information.setHead(Boolean.parseBoolean(map.get("title")));
+//				// }
+//				// // if("isImage".equals(fieldName)){
+//				// //
+//				// information.setIsImage(Integer.parseInt(map.get("title")));
+//				// // }
+//				// if ("isHot".equals(fieldName)) {
+//				// information.setHot(Boolean.parseBoolean(map.get("title")));
+//				// }
+//				
+//				
+////				infoLink
+////				docFile
+//				
+//				if (information.getInformationId() != 0) {
+//					InformationBO.getInstance().update(information);
+//				} else {
+//					InformationBO.getInstance().save(information);
+//				}
+//				ApplicationBO.getInstance().refreshApplication(request.getSession().getServletContext());
 				
 				
 				request.getRequestDispatcher("/information?action=adminList").forward(request, response);

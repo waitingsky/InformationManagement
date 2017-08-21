@@ -10,7 +10,7 @@
 		<div class="news_title"><h3>${information.title }</h3></div>
 		<div class="news_info">
 			发布时间：[<fmt:formatDate value="${information.publishDate }" type="date" pattern="yyyy-MM-dd HH:mm:ss"/>]&nbsp;&nbsp;作者：${information.author }
-			&nbsp;&nbsp;频道：[${information.channelName }]&nbsp;&nbsp;阅读次数：${information.click }
+			&nbsp;&nbsp;频道：[${information.channelName }]&nbsp;&nbsp;阅读次数：${information.clickCount }
 		</div>
 		<div class="news_content">
 			${information.content }

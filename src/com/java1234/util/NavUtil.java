@@ -11,19 +11,19 @@ public class NavUtil {
 		return navCode.toString();
 	}
 	
-	public static String genNewsListNavigation(String typeName,String typeId){
+	public static String genNewsListNavigation(String channelName,String channelId){
 		StringBuffer navCode=new StringBuffer();
 		navCode.append("当前位置：&nbsp;&nbsp;");
 		navCode.append("<a href='goIndex'>主页</a>&nbsp;&nbsp;>&nbsp;&nbsp;");
-		navCode.append("<a href='news?action=list&typeId="+typeId+"'>"+typeName+"</a>");
+		navCode.append("<a href='information?action=list&channelId="+channelId+"'>"+channelName+"</a>");
 		return navCode.toString();
 	}
 	
-	public static String genNewsNavigation(String typeName,String typeId,String newsName){
+	public static String genNewsNavigation(String channelName,String channelId,String informationName){
 		StringBuffer navCode=new StringBuffer();
 		navCode.append("当前位置：&nbsp;&nbsp;");
 		navCode.append("<a href='goIndex'>主页</a>&nbsp;&nbsp;>&nbsp;&nbsp;");
-		navCode.append("<a href='news?action=list&typeId="+typeId+"'>"+typeName+"</a>&nbsp;&nbsp;>&nbsp;&nbsp;"+newsName);
+		navCode.append("<a href='information?action=list&channelId="+channelId+"'>"+channelName+"</a>&nbsp;&nbsp;>&nbsp;&nbsp;"+informationName);
 		return navCode.toString();
 	}
 }

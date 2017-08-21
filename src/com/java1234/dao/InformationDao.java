@@ -25,7 +25,7 @@ public class InformationDao {
 			news.setPublishDate(DateUtil.formatString(rs.getString("publishDate"), "yyyy-MM-dd HH:mm:ss"));
 			news.setAuthor(rs.getString("author"));
 			news.setChannelId(rs.getInt("typeId"));
-			news.setClick(rs.getBoolean("click"));
+			news.setClickCount(rs.getInt("click"));
 			news.setHead(rs.getBoolean("isHead"));
 //			news.setImageName(PropertiesUtil.getValue("userImage")+rs.getString("imageName"));
 			news.setHot(rs.getBoolean("isHot"));
@@ -64,7 +64,7 @@ public class InformationDao {
 			news.setAuthor(rs.getString("author"));
 			news.setChannelId(rs.getInt("typeId"));
 			news.setChannelName(rs.getString("typeName"));
-			news.setClick(rs.getBoolean("click"));
+			news.setClickCount(rs.getInt("click"));
 			news.setHead(rs.getBoolean("isHead"));
 			news.setHot(rs.getBoolean("isHot"));
 
@@ -117,7 +117,7 @@ public class InformationDao {
 			
 			news.setChannelId(rs.getInt(6));
 			news.setType(rs.getInt(7));
-			news.setClick(rs.getBoolean(8));
+			news.setClickCount(rs.getInt(8));
 			news.setHead(rs.getBoolean(9));
 //			news.setIsImage(rs.getInt("isImage"));
 //			news.setImageName(PropertiesUtil.getValue("userImage")+rs.getString("imageName"));
@@ -182,7 +182,7 @@ public class InformationDao {
 		
 		pstmt.setInt(4, news.getChannelId());
 		pstmt.setInt(5, news.getType());
-		pstmt.setBoolean(6, news.isClick());
+		pstmt.setInt(6, news.getClickCount());
 		pstmt.setBoolean(7, news.isHead());
 		pstmt.setBoolean(8, news.isHot());
 		

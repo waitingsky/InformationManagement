@@ -95,7 +95,7 @@ public class SystemConfigBO {
 			news.setPublishDate(DateUtil.formatString(rs.getString("publishDate"), "yyyy-MM-dd HH:mm:ss"));
 			news.setAuthor(rs.getString("author"));
 			news.setTypeId(rs.getInt("typeId"));
-			news.setClick(rs.getInt("click"));
+			news.setClickCount(rs.getInt("click"));
 			news.setIsHead(rs.getInt("isHead"));
 			news.setImageName(PropertiesUtil.getValue("userImage")+rs.getString("imageName"));
 			news.setIsHot(rs.getInt("isHot"));
@@ -134,7 +134,7 @@ public class SystemConfigBO {
 			news.setAuthor(rs.getString("author"));
 			news.setTypeId(rs.getInt("typeId"));
 			news.setChannelName(rs.getString("typeName"));
-			news.setClick(rs.getInt("click"));
+			news.setClickCount(rs.getInt("click"));
 			news.setIsHead(rs.getInt("isHead"));
 			news.setImageName(PropertiesUtil.getValue("userImage")+rs.getString("imageName"));
 			news.setIsHot(rs.getInt("isHot"));
@@ -180,7 +180,7 @@ public class SystemConfigBO {
 			news.setAuthor(rs.getString("author"));
 			news.setChannelName(rs.getString("typeName"));
 			news.setTypeId(rs.getInt("typeId"));
-			news.setClick(rs.getInt("click"));
+			news.setClickCount(rs.getInt("click"));
 			news.setIsHead(rs.getInt("isHead"));
 			news.setIsImage(rs.getInt("isImage"));
 			news.setImageName(PropertiesUtil.getValue("userImage")+rs.getString("imageName"));
