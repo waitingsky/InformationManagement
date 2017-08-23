@@ -237,26 +237,4 @@ public class SystemConfigDao {
 		return pstmt.executeUpdate();
 	}
 	
-
-//	public int newsDelete(Connection con,String newsId)throws Exception{
-//		String sql="delete from t_news where newsId=?";
-//		PreparedStatement pstmt=con.prepareStatement(sql);
-//		pstmt.setString(1, newsId);
-//		return pstmt.executeUpdate();
-//	}
-	
-	public int newsDelete(Connection con,String newsIds)throws Exception{
-		String sql="delete from t_news where newsId in ("+newsIds+")";;
-		PreparedStatement pstmt=con.prepareStatement(sql);
-//		pstmt.setString(1, newsId);
-		return pstmt.executeUpdate();
-	}
-
-	
-//	public int newsBatchDelete(Connection con,String commentIds)throws Exception{
-//		String sql="delete from t_comment where commentId in ("+commentIds+")";
-//		PreparedStatement pstmt=con.prepareStatement(sql);
-//		return pstmt.executeUpdate();
-//	}
-
 }

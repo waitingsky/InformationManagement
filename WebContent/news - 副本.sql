@@ -3,9 +3,10 @@ CREATE TABLE `sys_portalconfig` (
   `config_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(40) DEFAULT NULL,
   `content` text,
+  `description` text,
   `options` text,
   `update_time` datetime,
-  PRIMARY KEY (`configId`)
+  PRIMARY KEY (`config_id`)
 
 ) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=utf8;
 

@@ -9,96 +9,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
+	function onSystemTypeChange(systemType,systemDesc,systemUrl){
+		 var obj = document.getElementById(systemType);
+		 var index = obj.selectedIndex; // 选中索引
+		 var text = obj.options[index].text; // 选中文本
+		 var value = obj.options[index].value; // 选中值
 
-
-	function checkChange(){
-		if(document.getElementById("isImage").checked){
-			$("#hdtp").show();
-		}else{
-			$("#hdtp").hide();
-		}
-	}
-	
-	function checkPropertyChange(){
-		var newProperty=$('input[name="optionsRadios"]:checked').val();
-
-		if(newProperty!=null||newProperty!=""){
-			if(newProperty=="0"){
-				$("#normalNewsContent").show();
-				$("#normalNewsAttachment").show();
-				
-				$("#normalNewsFile").hide();
-				$("#normalNewsLink").hide();
-			}else if(newProperty=="1"){
-				$("#normalNewsFile").show();
-				
-				$("#normalNewsContent").hide();
-				$("#normalNewsAttachment").hide();
-				$("#normalNewsLink").hide();
-			}else if(newProperty=="2"){
-				$("#normalNewsLink").show();
-				
-				$("#normalNewsContent").hide();
-				$("#normalNewsAttachment").hide();
-				$("#normalNewsFile").hide();
-			}
-		}
-	}
-//     $(".switch").bootstrapSwitch();
-	function addAttachment(){
-		var tmpId = document.getElementById("attachmentTmpId").value;
-		tmpId++;
-		document.getElementById("attachmentTmpId").value = tmpId;
-		
-		var newAttach="<li id='li"+tmpId+"' class=''>"
-		+"<span class='add-on'><i class='icon-file'></i></span>"
-		+"<input type='file'/>"
-		+"<button class='btn' type='button' onclick='removeAttachment("+tmpId+")'>-</button>"
-		+"</li>";              
-		$("#attachment").append(newAttach); 
-	}
-	
-	function removeAttachment(attachId){
-		$("#li"+attachId).remove();
-	}
-	
-	function checkForm(){
-// 		var title=document.getElementById("title").value;
-// 		var author=document.getElementById("author").value;
-// 		var typeId=document.getElementById("typeId").value;
-// 		var content=CKEDITOR.instances.content.getData();
-// 		var newProperty=$('input[name="optionsRadios"]:checked').val();
-
-// 		if(title==null||title==""){
-// 			document.getElementById("error").innerHTML="新闻标题不能为空！";
-// 			return false;
-// 		}
-// 		if(author==null||author==""){
-// 			document.getElementById("error").innerHTML="作者不能为空！";
-// 			return false;
-// 		}
-// 		if(typeId==null||typeId==""){
-// 			document.getElementById("error").innerHTML="请选择新闻类别！";
-// 			return false;
-// 		}
-// 		if(newProperty==null||newProperty==""){
-// 			document.getElementById("error").innerHTML="请选择新闻属性！";
-// 			return false;
-// 		}
-		
-// 		if(newProperty=="0"){
-// 			// normal
-// 			if(content==null||content==""){
-// 				document.getElementById("error").innerHTML="新闻内容不能为空！";
-// 				return false;
-// 			}
-// 		}else if(newProperty=="1"){
-// 			// attachment
-// 		}else if(newProperty=="2"){
-// 			// link
-// 		}
-		
-		return true;
+		 var txtDesc = document.getElementById(systemDesc);
+		 var txtUrl = document.getElementById(systemUrl);
+		 if(value==-1){
+			 txtDesc.readOnly=true;
+			 txtUrl.readOnly=true;
+		 }else{
+			 txtDesc.readOnly=false;
+			 txtUrl.readOnly=false;
+		 }
 	}
 </script>
 </head>
@@ -110,15 +35,141 @@
 	<div class="data_content">
 		<form action="config?action=configSave" method="post" enctype="multipart/form-data" onsubmit="return checkForm()">
 			<table cellpadding="5" width="100%">
-				<tr id="">
+				<tr>
+					<td width="80px" valign="top">
+						<label>Logo 配置：</label>
+					</td>
+					<td>
+<!-- 						<ul class="nav nav-list" id="attachment"> -->
+<!-- 						  <li class=""> -->
+<!-- 						  	<span class="add-on"><i class="icon-file"></i></span> -->
+<!-- 						  	<input type="file" id="logoImage" name="logoImage" value=""></input> -->
+<!-- 						  </li> -->
+<!-- 						</ul> -->
+						<input type="file" id="xdaTanFileImg" onchange="xmTanUploadImg(this)" accept="image/*"/>
+            			<img id="xmTanImg"/>
+           				<div id="xmTanDiv"></div>
+					</td>
+				</tr>
+				
+				<tr>
+					<td valign="top">
+						<label>系统1：</label>
+					</td>
+					<td>
+						<table cellpadding="0" width="100%">
+							<tr>
+								<td>
+									<select id="systemType1" name="systemType1" onchange="onSystemTypeChange('systemType1','systemDesc1','systemUrl1')">
+										<option value="-1" >不启用</option>
+										<option value="0">启用：CFS</option>
+										<option value="1">启用：HFM</option>
+										<option value="1">启用：Planning</option>
+									</select>
+								</td>
+								<td>
+									<input type="text" id="systemDesc1" name="systemDesc1" class="input-xlarge" value="" placeholder="系统描述" readonly/>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<input width="100%" type="text" id="systemUrl1" name="systemUrl1" class="input-xxlarge" value="" placeholder="系统URL" readonly/>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top">
+						<label>系统2：</label>
+					</td>
+					<td>
+						<table cellpadding="0" width="100%">
+							<tr>
+								<td>
+									<select  id="systemType2" name="systemType2" onchange="onSystemTypeChange('systemType2','systemDesc2','systemUrl2')">
+										<option value="-1">不启用</option>
+										<option value="0">启用：CFS</option>
+										<option value="1">启用：HFM</option>
+										<option value="1">启用：Planning</option>
+									</select>
+								</td>
+								<td>
+									<input type="text" id="systemDesc2" name="systemDesc2" class="input-xlarge" value="" placeholder="系统描述"/>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<input width="100%" type="text" id="systemUrl2" name="systemUrl2" class="input-xxlarge" value="" placeholder="系统URL"/>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top">
+						<label>系统3：</label>
+					</td>
+					<td>
+						<table cellpadding="0" width="100%">
+							<tr>
+								<td>
+									<select  id="systemType3" name="systemType3" onchange="onSystemTypeChange('systemType3','systemDesc3','systemUrl3')">
+										<option value="-1">不启用</option>
+										<option value="0">启用：CFS</option>
+										<option value="1">启用：HFM</option>
+										<option value="1">启用：Planning</option>
+									</select>
+								</td>
+								<td>
+									<input type="text" id="systemDesc3" name="systemDesc3" class="input-xlarge" value="" placeholder="系统描述"/>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<input width="100%" type="text" id="systemUrl3" name="systemUrl3" class="input-xxlarge" value="" placeholder="系统URL"/>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top">
+						<label>系统4：</label>
+					</td>
+					<td>
+						<table cellpadding="0" width="100%">
+							<tr>
+								<td>
+									<select  id="systemType4" name="systemType4" onchange="onSystemTypeChange('systemType4','systemDesc4','systemUrl4')">
+										<option value="-1">不启用</option>
+										<option value="0">启用：CFS</option>
+										<option value="1">启用：HFM</option>
+										<option value="1">启用：Planning</option>
+									</select>
+								</td>
+								<td>
+									<input type="text" id="systemDesc4" name="systemDesc4" class="input-xlarge" value="" placeholder="系统描述"/>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<input width="100%" type="text" id="systemUrl4" name="systemUrl4" class="input-xxlarge" value="" placeholder="系统URL"/>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
 					<td valign="top">
 						<label>服务与支持：</label>
 					</td>
 					<td>
-						<textarea class="ckeditor" id=serviceSupport name="serviceSupport">${config.serviceSupport }</textarea>
+<%-- 						<textarea class="ckeditor" id=serviceSupport name="serviceSupport">${config.serviceSupport }</textarea> --%>
+						<textarea class="ckeditor" id=serviceSupport name="serviceSupport"></textarea>
+
 					</td>
 				</tr>
-				
 				<tr>
 					<td>
 <%-- 						<input type="hidden" id="newsId" name="newsId" value="${news.newsId }"/>&nbsp; --%>
@@ -133,5 +184,46 @@
 		</form>
 	</div>
 </div>
+    <script type="text/javascript">            
+            //判断浏览器是否支持FileReader接口
+            if (typeof FileReader == 'undefined') {
+                document.getElementById("xmTanDiv").innerHTML = "<h3>当前浏览器不支持图片预览接口</h3>";
+                // 使选择控件不可操作
+                // document.getElementById("xdaTanFileImg").setAttribute("disabled", "disabled");
+            }
+
+            //选择图片，马上预览
+            function xmTanUploadImg(obj) {
+                var file = obj.files[0];
+                
+                console.log(obj);console.log(file);
+                console.log("file.size = " + file.size);  //file.size 单位为byte
+
+                var reader = new FileReader();
+
+                //读取文件过程方法
+                reader.onloadstart = function (e) {
+                    console.log("开始读取....");
+                }
+                reader.onprogress = function (e) {
+                    console.log("正在读取中....");
+                }
+                reader.onabort = function (e) {
+                    console.log("中断读取....");
+                }
+                reader.onerror = function (e) {
+                    console.log("读取异常....");
+                }
+                reader.onload = function (e) {
+                    console.log("成功读取....");
+
+                    var img = document.getElementById("xmTanImg");
+                    img.src = e.target.result;
+                    //或者 img.src = this.result;  //e.target == this
+                }
+
+                reader.readAsDataURL(file)
+            }
+        </script>
 </body>
 </html>

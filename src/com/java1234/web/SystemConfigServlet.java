@@ -59,25 +59,13 @@ public class SystemConfigServlet extends HttpServlet{
 		request.setCharacterEncoding("utf-8");
 		String action=request.getParameter("action");
 		if("config".equals(action)){
-			this.newsBackList(request, response);
+			this.loadConfig(request, response);
 		}else if("configSave".equals(action)){
-			this.newsSave(request, response);
+			this.save(request, response);
 		}
-//		else if("show".equals(action)){
-//			this.newsShow(request, response);
-//		}else if("preSave".equals(action)){
-//			this.newsPreSave(request, response);
-//		}else if("save".equals(action)){
-//			this.newsSave(request, response);
-//		}else if("backList".equals(action)){
-//			this.newsBackList(request,response);
-//		}else if("delete".equals(action)){
-//			this.newsDelete(request,response);
-//		}
-		
 	}
 	
-	private void newsSave(HttpServletRequest request, HttpServletResponse response)
+	private void save(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		FileItemFactory factory=new DiskFileItemFactory();
 		ServletFileUpload upload=new ServletFileUpload(factory);
@@ -97,7 +85,7 @@ public class SystemConfigServlet extends HttpServlet{
 				String fieldName=item.getFieldName();
 				if("serviceSupport".equals(fieldName)){
 					if(StringUtil.isNotEmpty(item.getString("utf-8"))){
-						config.getMap().put(SystemConfig.CONFIG_SERVICES_AND_SUPPORT, item.getString("utf-8"));
+//						config.getMap().put(SystemConfig.CONFIG_SERVICES_AND_SUPPORT, item.getString("utf-8"));
 //						news.setNewsId(Integer.parseInt(item.getString("utf-8")));
 					}
 				}
@@ -164,14 +152,14 @@ public class SystemConfigServlet extends HttpServlet{
 		}
 	}
 	
-	private void newsBackList(HttpServletRequest request, HttpServletResponse response)
+	private void loadConfig(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Connection con=null;
 		try{
 			con=dbUtil.getCon();
-			SystemConfig config = systemConfigDao.loadConfig(con);
+//			SystemConfig config = systemConfigDao.loadConfig(con);
 			
-			request.setAttribute("config", config);
+//			request.setAttribute("config", config);
 			request.setAttribute("navCode", NavUtil.genNewsManageNavigation("系统管理", "系统配置"));
 			request.setAttribute("mainPage", "/background/system/systemConfig.jsp");
 			request.getRequestDispatcher("/background/mainTemp.jsp").forward(request, response);

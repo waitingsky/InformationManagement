@@ -2,28 +2,18 @@ package com.java1234.model;
 
 import java.util.Date;
 
-public class SystemConfig implements ISystemConfig{
+public class SystemConfig implements ISystemConfig {
 
 	private int configId;
 	private String name;
 	private String content;
+	private String description;
 	private String options;
 	private Date updateTime;
-	 
-//	private HashMap<String, String> map = new HashMap<String, String>();
-
 
 	public SystemConfig() {
 		super();
 	}
-
-//	public String getServiceSupport() {
-//		if(map.containsKey(SystemConfig.CONFIG_SERVICES_AND_SUPPORT)){
-//			return map.get(SystemConfig.CONFIG_SERVICES_AND_SUPPORT);
-//		}
-//		
-//		return null;
-//	}
 
 	public void setContent(String content) {
 		this.content = content;
@@ -45,14 +35,6 @@ public class SystemConfig implements ISystemConfig{
 		this.name = name;
 	}
 
-//	public HashMap<String, String> getMap() {
-//		return map;
-//	}
-//
-//	public void setMap(HashMap<String, String> map) {
-//		this.map = map;
-//	}
-
 	public String getOptions() {
 		return options;
 	}
@@ -71,5 +53,13 @@ public class SystemConfig implements ISystemConfig{
 
 	public String getContent() {
 		return content;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }
