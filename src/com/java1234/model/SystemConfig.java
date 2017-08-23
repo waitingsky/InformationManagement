@@ -1,40 +1,29 @@
 package com.java1234.model;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Hashtable;
 
-public class SystemConfig {
-
-	public final static String CONFIG_SERVICES_AND_SUPPORT = "Services and support";
+public class SystemConfig implements ISystemConfig{
 
 	private int configId;
-	private String title;
+	private String name;
 	private String content;
+	private String options;
+	private Date updateTime;
+	 
+//	private HashMap<String, String> map = new HashMap<String, String>();
 
-	private HashMap<String, String> map = new HashMap<String, String>();
-
-	// private Date publishDate;
-	// private String author;
-	// private int typeId=-1;
-	// private String typeName;
-	// private int click;
-	// private int isHead;
-	// private int isImage;
-	// private String imageName;
-	// private int isHot;
 
 	public SystemConfig() {
 		super();
 	}
 
-	public String getServiceSupport() {
-		if(map.containsKey(SystemConfig.CONFIG_SERVICES_AND_SUPPORT)){
-			return map.get(SystemConfig.CONFIG_SERVICES_AND_SUPPORT);
-		}
-		
-		return null;
-	}
+//	public String getServiceSupport() {
+//		if(map.containsKey(SystemConfig.CONFIG_SERVICES_AND_SUPPORT)){
+//			return map.get(SystemConfig.CONFIG_SERVICES_AND_SUPPORT);
+//		}
+//		
+//		return null;
+//	}
 
 	public void setContent(String content) {
 		this.content = content;
@@ -48,20 +37,39 @@ public class SystemConfig {
 		this.configId = configId;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getName() {
+		return name;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public HashMap<String, String> getMap() {
-		return map;
+//	public HashMap<String, String> getMap() {
+//		return map;
+//	}
+//
+//	public void setMap(HashMap<String, String> map) {
+//		this.map = map;
+//	}
+
+	public String getOptions() {
+		return options;
 	}
 
-	public void setMap(HashMap<String, String> map) {
-		this.map = map;
+	public void setOptions(String options) {
+		this.options = options;
 	}
 
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public String getContent() {
+		return content;
+	}
 }

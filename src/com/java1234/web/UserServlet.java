@@ -61,11 +61,18 @@ public class UserServlet extends HttpServlet{
 				request.setAttribute("error", "用户名或者密码错误！");
 				request.setAttribute("password", password);
 				request.setAttribute("userName", userName);
-				request.getRequestDispatcher("/background/login.jsp").forward(request, response);
+//				request.getRequestDispatcher("index.jsp").forward(request, response);
+				request.getRequestDispatcher("/goIndex").forward(request, response);
+
+//				request.getRequestDispatcher("/background/login.jsp").forward(request, response);
 			}else{
 				session.setAttribute("currentUser", currentUser);
-				request.setAttribute("mainPage", "/background/default.jsp");
-				request.getRequestDispatcher("/background/mainTemp.jsp").forward(request, response);
+//				request.getRequestDispatcher("index.jsp").forward(request, response);
+				request.getRequestDispatcher("/goIndex").forward(request, response);
+
+
+//				request.setAttribute("mainPage", "/background/default.jsp");
+//				request.getRequestDispatcher("/background/mainTemp.jsp").forward(request, response);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -82,7 +89,9 @@ public class UserServlet extends HttpServlet{
 			throws ServletException, IOException {
 		request.getSession().invalidate();
 //		System.out.println(request.getContextPath()+"/background/login.jsp");
-		response.sendRedirect(request.getContextPath()+"/background/login.jsp");
+//		request.getRequestDispatcher("index.jsp").forward(request, response);
+		request.getRequestDispatcher("/goIndex").forward(request, response);
+
 	}
 	
 	private void manageLogin(HttpServletRequest request, HttpServletResponse response)
