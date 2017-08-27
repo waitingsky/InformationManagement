@@ -1,42 +1,83 @@
 package com.java1234.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class SystemConfigs implements ISystemConfig {
 
 	private HashMap<String, SystemConfig> map = new HashMap<String, SystemConfig>();
-	private List<SystemConfig> list = new ArrayList<SystemConfig>();
+	// private List<SystemConfig> list = new ArrayList<SystemConfig>();
 
-	// yong session来控制刷新，登录时再刷新，注销时再刷新。
-
-	public SystemConfigs() {
-		super();
+	public SystemConfigs(List<SystemConfig> list) {
+		// this.list = list;
+		if (list != null) {
+			for (SystemConfig tmp : list) {
+				map.put(tmp.getName(), tmp);
+			}
+		}
 	}
+
+	// public HashMap<String, SystemConfig> getMap() {
+	// return map;
+	// }
+	//
+	// public void setMap(HashMap<String, SystemConfig> map) {
+	// this.map = map;
+	// }
+	//
+	// public List<SystemConfig> getList() {
+	// return list;
+	// }
+	//
+	// public void setList(List<SystemConfig> list) {
+	// this.list = list;
+	// }
 
 	public SystemConfig getServiceSupport() {
 		if (map.containsKey(SystemConfigs.CONFIG_MODULE_SERVICES)) {
 			return map.get(SystemConfigs.CONFIG_MODULE_SERVICES);
 		}
 
-		return null;
+		return new SystemConfig();
 	}
 
-	public HashMap<String, SystemConfig> getMap() {
-		return map;
+	public SystemConfig getCustomSystem1() {
+		if (map.containsKey(SystemConfigs.CONFIG_MODULE_SYSTEM1)) {
+			return map.get(SystemConfigs.CONFIG_MODULE_SYSTEM1);
+		}
+
+		return new SystemConfig();
 	}
 
-	public void setMap(HashMap<String, SystemConfig> map) {
-		this.map = map;
+	public SystemConfig getCustomSystem2() {
+		if (map.containsKey(SystemConfigs.CONFIG_MODULE_SYSTEM2)) {
+			return map.get(SystemConfigs.CONFIG_MODULE_SYSTEM2);
+		}
+
+		return new SystemConfig();
 	}
 
-	public List<SystemConfig> getList() {
-		return list;
+	public SystemConfig getCustomSystem3() {
+		if (map.containsKey(SystemConfigs.CONFIG_MODULE_SYSTEM3)) {
+			return map.get(SystemConfigs.CONFIG_MODULE_SYSTEM3);
+		}
+
+		return new SystemConfig();
 	}
 
-	public void setList(List<SystemConfig> list) {
-		this.list = list;
+	public SystemConfig getCustomSystem4() {
+		if (map.containsKey(SystemConfigs.CONFIG_MODULE_SYSTEM4)) {
+			return map.get(SystemConfigs.CONFIG_MODULE_SYSTEM4);
+		}
+
+		return new SystemConfig();
 	}
 
+	public SystemConfig getImageLogo() {
+		if (map.containsKey(SystemConfigs.CONFIG_MODULE_LOGO)) {
+			return map.get(SystemConfigs.CONFIG_MODULE_LOGO);
+		}
+
+		return new SystemConfig();
+	}
 }

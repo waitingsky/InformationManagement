@@ -1,6 +1,8 @@
 package com.java1234.web;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -22,6 +24,7 @@ import com.java1234.dao.InformationBO;
 import com.java1234.model.Channel;
 import com.java1234.model.Information;
 import com.java1234.model.PageBean;
+import com.java1234.util.DateUtil;
 import com.java1234.util.NavUtil;
 import com.java1234.util.PageUtil;
 import com.java1234.util.PropertiesUtil;
@@ -75,11 +78,10 @@ public class InformationServlet extends HttpServlet {
 			int total = InformationBO.getInstance().count(information, null, null);
 			PageBean pageBean = new PageBean(Integer.parseInt(page),
 					Integer.parseInt(PropertiesUtil.getValue("pageSize")));
-			List<Information> infoListWithChannel = InformationBO.getInstance().list(information, pageBean, null,
-					null);
+			List<Information> infoListWithChannel = InformationBO.getInstance().list(information, pageBean, null, null);
 			request.setAttribute("infoListWithChannel", infoListWithChannel);
-			request.setAttribute("navCode",
-					NavUtil.genNewsListNavigation(ChannelBO.getInstance().getById(channelId).getChannelName(), channelId));
+			request.setAttribute("navCode", NavUtil
+					.genNewsListNavigation(ChannelBO.getInstance().getById(channelId).getChannelName(), channelId));
 			request.setAttribute("pageCode", PageUtil.getUpAndDownPagation(total, Integer.parseInt(page),
 					Integer.parseInt(PropertiesUtil.getValue("pageSize")), channelId));
 			System.out.println(PageUtil.getUpAndDownPagation(total, Integer.parseInt(page),
@@ -107,8 +109,8 @@ public class InformationServlet extends HttpServlet {
 			request.setAttribute("information", information);
 			request.setAttribute("pageCode",
 					this.genUpAndDownPageCode(InformationBO.getInstance().getUpAndDownPageId(informationId)));
-			request.setAttribute("navCode",
-					NavUtil.genNewsNavigation(information.getChannelName(), information.getChannelId() + "", information.getTitle()));
+			request.setAttribute("navCode", NavUtil.genNewsNavigation(information.getChannelName(),
+					information.getChannelId() + "", information.getTitle()));
 			request.setAttribute("mainPage", "news/newsShow.jsp");
 			request.getRequestDispatcher("foreground/newsTemp.jsp").forward(request, response);
 		} catch (Exception e) {
@@ -161,123 +163,129 @@ public class InformationServlet extends HttpServlet {
 		FileItemFactory factory = new DiskFileItemFactory();
 		ServletFileUpload upload = new ServletFileUpload(factory);
 
-		List<FileItem> items = null;
 		try {
-			items = upload.parseRequest(request);
+			List<FileItem> items = upload.parseRequest(request);
 			if (items != null) {
 				HashMap<String, String> map = new HashMap<String, String>();
+				HashMap<String, FileItem> fileMap = new HashMap<String, FileItem>();
 
 				Iterator<FileItem> iterator = items.iterator();
-				
+
 				while (iterator.hasNext()) {
 					FileItem item = iterator.next();
 					if (item.isFormField()) {
-		                map.put(item.getFieldName(), item.getString("utf-8"));
-
-//						String fieldName = item.getFieldName();
-//						if ("informationId".equals(fieldName)) {
-//							if (StringUtil.isNotEmpty(item.getString("utf-8"))) {
-//								information.setInformationId(Integer.parseInt(item.getString("utf-8")));
-//							}
-//						}
-//						if ("title".equals(fieldName)) {
-//							information.setTitle(item.getString("utf-8"));
-//						}
-//						if ("content".equals(fieldName)) {
-//							information.setContent(item.getString("utf-8"));
-//						}
-//						if ("author".equals(fieldName)) {
-//							information.setAuthor(item.getString("utf-8"));
-//						}
-//						if ("channelId".equals(fieldName)) {
-//							information.setChannelId(Integer.parseInt(item.getString("utf-8")));
-//						}
-//
-//						if ("isHead".equals(fieldName)) {
-//							information.setHead(Integer.parseInt(item.getString("utf-8")) == 1 ? true : false);
-//						}
-//						if ("isHot".equals(fieldName)) {
-//							information.setHot(Integer.parseInt(item.getString("utf-8")) == 1 ? true : false);
-//						}
-//						if ("optionsRadios".equals(fieldName)) {
-//							information.setType(Integer.parseInt(item.getString("utf-8")));
-//						}
-//
-//						// if ("isHead".equals(fieldName)) {
-//						// information.setHead(Boolean.parseBoolean(item.getString("utf-8")));
-//						// }
-//						// // if("isImage".equals(fieldName)){
-//						// //
-//						// information.setIsImage(Integer.parseInt(item.getString("utf-8")));
-//						// // }
-//						// if ("isHot".equals(fieldName)) {
-//						// information.setHot(Boolean.parseBoolean(item.getString("utf-8")));
-//						// }
-//						// if("imageName".equals(fieldName)&&information.getImageName()==null){
-//						// if(StringUtil.isNotEmpty(item.getString("utf-8"))){
-//						// information.setImageName(item.getString("utf-8").split("/")[1]);
-//						// }
-//						// }
-					} else  {
+						map.put(item.getFieldName(), item.getString("utf-8"));
+					} else {
 						String itemName = item.getName();
-						System.out.println(itemName);
-//						
-//						if (!"".equals(itemName)){
-//							String imageName = DateUtil.getCurrentDateStr();
-//							information.setImageName(imageName + "." + item.getName().split("\\.")[1]);
-//							String filePath = PropertiesUtil.getValue("imagePath") + imageName + "."
-//									+ item.getName().split("\\.")[1];
-//							item.write(new File(filePath));
-//						}
+						if (StringUtil.isNotEmpty(itemName)) {
+
+							// String fileName = item.getName();// 文件名称
+							// System.out.println("原文件名：" + fileName);//
+							// Koala.jpg
+							//
+							// String suffix =
+							// fileName.substring(fileName.lastIndexOf('.'));
+							// System.out.println("扩展名：" + suffix);// .jpg
+							//
+							// // 新文件名（唯一）
+							// String newFileName = new Date().getTime() +
+							// suffix;
+							// System.out.println("新文件名：" + newFileName);//
+							// image\1478509873038.jpg
+							//
+							// // 5. 调用FileItem的write()方法，写入文件
+							// String imageName = DateUtil.getCurrentDateStr();
+							// String filePath =
+							// PropertiesUtil.getValue("imagePath") +
+							// newFileName;
+							//
+							// File file = new File(filePath);
+							// System.out.println(file.getAbsolutePath());
+							// item.write(file);
+							//
+							// // 6. 调用FileItem的delete()方法，删除临时文件
+							// item.delete();
+							//
+							//// map.put(item.getFieldName(), item.getName());
+							// map.put(item.getFieldName(), newFileName);
+
+							fileMap.put(itemName, item);
+						}
 					}
 				}
-				
-//				Information information = new Information();
-//				
-//				if (StringUtil.isNotEmpty(map.get("informationId"))) {
-//					information.setInformationId(Integer.parseInt(map.get("informationId")));
-//				}
-//				
-//				information.setTitle(map.get("title"));
-//				information.setContent(map.get("content"));
-//				information.setAuthor(map.get("author"));
-//				information.setChannelId(Integer.parseInt(map.get("channelId")));
-//
-//				information.setHead(Integer.parseInt(map.get("isHead")) == 1 ? true : false);
-//				information.setHot(Integer.parseInt(map.get("isHot")) == 1 ? true : false);
-//				information.setType(Integer.parseInt(map.get("optionsRadios")));
-//
-//				// if ("isHead".equals(fieldName)) {
-//				// information.setHead(Boolean.parseBoolean(map.get("title")));
-//				// }
-//				// // if("isImage".equals(fieldName)){
-//				// //
-//				// information.setIsImage(Integer.parseInt(map.get("title")));
-//				// // }
-//				// if ("isHot".equals(fieldName)) {
-//				// information.setHot(Boolean.parseBoolean(map.get("title")));
-//				// }
-//				
-//				
-////				infoLink
-////				docFile
-//				
-//				if (information.getInformationId() != 0) {
-//					InformationBO.getInstance().update(information);
-//				} else {
-//					InformationBO.getInstance().save(information);
-//				}
-//				ApplicationBO.getInstance().refreshApplication(request.getSession().getServletContext());
-				
-				
+
+				Information information = new Information();
+
+				if (StringUtil.isNotEmpty(map.get("informationId"))) {
+					information.setInformationId(Integer.parseInt(map.get("informationId")));
+				}
+
+				information.setTitle(map.get("title"));
+
+				information.setAuthor(map.get("author"));
+				information.setChannelId(Integer.parseInt(map.get("channelId")));
+
+				information.setHead(Integer.parseInt(map.get("isHead")) == 1 ? true : false);
+				information.setHot(Integer.parseInt(map.get("isHot")) == 1 ? true : false);
+				information.setType(Integer.parseInt(map.get("optionsRadios")));
+
+				if (information.getType() == 0) {
+					information.setContent(map.get("content"));
+
+					for (String key : fileMap.keySet()) {
+						if (key != null && key.startsWith("file")) {
+							saveFile(fileMap.get(key));
+						}
+					}
+
+				} else if (information.getType() == 1) {
+					String newFileName = saveFile(fileMap.get("docFile"));
+					information.setContent(newFileName);
+				} else if (information.getType() == 2) {
+					information.setContent(map.get("infoLink"));
+				}
+
+				if (information.getInformationId() != 0) {
+					InformationBO.getInstance().update(information);
+				} else {
+					InformationBO.getInstance().save(information);
+				}
+				ApplicationBO.getInstance().refreshApplication(request.getSession().getServletContext());
+
 				request.getRequestDispatcher("/information?action=adminList").forward(request, response);
-
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
+	}
+
+	private String saveFile(FileItem item) throws Exception {
+		if (item != null) {
+			String fileName = item.getName();// 文件名称
+			System.out.println("原文件名：" + fileName);// Koala.jpg
+
+			String suffix = fileName.substring(fileName.lastIndexOf('.'));
+			System.out.println("扩展名：" + suffix);// .jpg
+
+			// 新文件名（唯一）
+			String newFileName = new Date().getTime() + suffix;
+			System.out.println("新文件名：" + newFileName);// image\1478509873038.jpg
+
+			// 5. 调用FileItem的write()方法，写入文件
+			String imageName = DateUtil.getCurrentDateStr();
+			String filePath = PropertiesUtil.getValue("imagePath") + newFileName;
+
+			File file = new File(filePath);
+			System.out.println(file.getAbsolutePath());
+			item.write(file);
+
+			// 6. 调用FileItem的delete()方法，删除临时文件
+			item.delete();
+
+			return newFileName;
+		}
+		return null;
 	}
 
 	private void infoAdminList(HttpServletRequest request, HttpServletResponse response)

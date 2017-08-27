@@ -73,8 +73,8 @@ public class IndexServlet extends HttpServlet {
 			}
 			request.setAttribute("allIndexInfoList", allIndexInfoList);
 
-			SystemConfig config = configDao.loadConfig(con);
-			request.setAttribute("config", config);
+//			SystemConfig config = configDao.loadConfig(con);
+//			request.setAttribute("config", config);
 
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 		} catch (Exception e) {

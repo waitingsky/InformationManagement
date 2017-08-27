@@ -77,16 +77,6 @@
   	<url-pattern>/channel</url-pattern>
   </servlet-mapping>
   
-  <servlet>
-  	<servlet-name>imageUpload</servlet-name>
-  	<servlet-class>com.java1234.web.ImageUploadServlet</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>imageUpload</servlet-name>
-  	<url-pattern>/imageUpload</url-pattern>
-  </servlet-mapping>
-  
     <servlet>
   	<servlet-name>configServlet</servlet-name>
   	<servlet-class>com.java1234.web.SystemConfigServlet</servlet-class>
@@ -95,6 +85,16 @@
   <servlet-mapping>
   	<servlet-name>configServlet</servlet-name>
   	<url-pattern>/config</url-pattern>
+  </servlet-mapping>
+  
+      <servlet>
+  	<servlet-name>fileServlet</servlet-name>
+  	<servlet-class>com.java1234.web.FileServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>fileServlet</servlet-name>
+  	<url-pattern>/file</url-pattern>
   </servlet-mapping>
   
 </web-app>

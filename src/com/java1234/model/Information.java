@@ -23,8 +23,6 @@ public class Information {
 	private String content;
 	private List<String> attachments;
 	
-	private String imageName;
-
 	public Information() {
 		super();
 	}
@@ -129,14 +127,4 @@ public class Information {
 	public void setAttachments(List<String> attachments) {
 		this.attachments = attachments;
 	}
-
-	public String getImageName() {
-		return imageName;
-	}
-
-	public void setImageName(String imageName) {
-		this.imageName = imageName;
-	}
-	
-	
 }

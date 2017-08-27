@@ -1,8 +1,12 @@
 package com.java1234.web;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Connection;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -10,43 +14,25 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-import com.java1234.dao.InformationDao;
-import com.java1234.dao.ChannelDao;
-import com.java1234.dao.SystemConfigDao;
-import com.java1234.model.Information;
-import com.java1234.model.Channel;
-import com.java1234.model.PageBean;
+import com.java1234.dao.SystemConfigBO;
+import com.java1234.model.ISystemConfig;
 import com.java1234.model.SystemConfig;
+import com.java1234.model.SystemConfigs;
 import com.java1234.util.DateUtil;
-import com.java1234.util.DbUtil;
 import com.java1234.util.NavUtil;
-import com.java1234.util.PageUtil;
 import com.java1234.util.PropertiesUtil;
-import com.java1234.util.ResponseUtil;
 import com.java1234.util.StringUtil;
 
-import net.sf.json.JSONObject;
+public class SystemConfigServlet extends HttpServlet {
 
-public class SystemConfigServlet extends HttpServlet{
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	
-	DbUtil dbUtil=new DbUtil();
-	InformationDao newsDao=new InformationDao();
-	ChannelDao newsTypeDao=new ChannelDao();
-	
-	SystemConfigDao systemConfigDao = new SystemConfigDao();
-	
+
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -57,404 +43,187 @@ public class SystemConfigServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		String action=request.getParameter("action");
-		if("config".equals(action)){
+		String action = request.getParameter("action");
+		if ("config".equals(action)) {
 			this.loadConfig(request, response);
-		}else if("configSave".equals(action)){
+		} else if ("configSave".equals(action)) {
 			this.save(request, response);
+		} else if ("configLogo".equals(action)) {
+			this.loadLogo(request, response);
 		}
 	}
-	
-	private void save(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		FileItemFactory factory=new DiskFileItemFactory();
-		ServletFileUpload upload=new ServletFileUpload(factory);
-		List<FileItem> items=null;
+
+	@SuppressWarnings("unchecked")
+	private void save(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		FileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(factory);
 		try {
-			items=upload.parseRequest(request);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Iterator itr=items.iterator();
-//		News news=new News();
-		SystemConfig config = new SystemConfig();
-		while(itr.hasNext()){
-			FileItem item=(FileItem) itr.next();
-			if(item.isFormField()){
-				String fieldName=item.getFieldName();
-				if("serviceSupport".equals(fieldName)){
-					if(StringUtil.isNotEmpty(item.getString("utf-8"))){
-//						config.getMap().put(SystemConfig.CONFIG_SERVICES_AND_SUPPORT, item.getString("utf-8"));
-//						news.setNewsId(Integer.parseInt(item.getString("utf-8")));
+			List<FileItem> items = upload.parseRequest(request);
+			if (items != null) {
+
+				Iterator<FileItem> itr = items.iterator();
+				HashMap<String, String> map = new HashMap<String, String>();
+
+				while (itr.hasNext()) {
+					FileItem item = (FileItem) itr.next();
+					if (item.isFormField()) {
+						map.put(item.getFieldName(), item.getString("utf-8"));
+					} else {
+						try {
+							String itemName = item.getName();// 文件名称
+							if (StringUtil.isNotEmpty(itemName)) {
+								System.out.println("原文件名：" + itemName);// Koala.jpg
+
+								String suffix = itemName.substring(itemName.lastIndexOf('.'));
+								System.out.println("扩展名：" + suffix);// .jpg
+
+								// 新文件名（唯一）
+								String newFileName = new Date().getTime() + suffix;
+								System.out.println("新文件名：" + newFileName);// image\1478509873038.jpg
+
+								// 5. 调用FileItem的write()方法，写入文件
+								String imageName = DateUtil.getCurrentDateStr();
+								String filePath = PropertiesUtil.getValue("imagePath") + newFileName;
+
+								// File file = new
+								// File("D:/lindaProjects/mySpace/wendao/WebContent/touxiang/"
+								// + newFileName);
+
+								File file = new File(filePath);
+								System.out.println(file.getAbsolutePath());
+								item.write(file);
+
+								// 6. 调用FileItem的delete()方法，删除临时文件
+								item.delete();
+
+								// map.put(item.getFieldName(), item.getName());
+								map.put(item.getFieldName(), newFileName);
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 					}
 				}
-//				if("title".equals(fieldName)){
-//					news.setTitle(item.getString("utf-8"));
-//				}
-//				if("content".equals(fieldName)){
-//					news.setContent(item.getString("utf-8"));
-//				}
-//				if("author".equals(fieldName)){
-//					news.setAuthor(item.getString("utf-8"));
-//				}
-//				if("typeId".equals(fieldName)){
-//					news.setTypeId(Integer.parseInt(item.getString("utf-8")));
-//				}
-//				if("isHead".equals(fieldName)){
-//					news.setIsHead(Integer.parseInt(item.getString("utf-8")));
-//				}
-//				if("isImage".equals(fieldName)){
-//					news.setIsImage(Integer.parseInt(item.getString("utf-8")));
-//				}
-//				if("isHot".equals(fieldName)){
-//					news.setIsHot(Integer.parseInt(item.getString("utf-8")));
-//				}
-//				if("imageName".equals(fieldName)&&news.getImageName()==null){
-//					if(StringUtil.isNotEmpty(item.getString("utf-8"))){
-//						news.setImageName(item.getString("utf-8").split("/")[1]);
-//					}
-//				}
-			}else if(!"".equals(item.getName())){
-//				try {
-//					String imageName=DateUtil.getCurrentDateStr();
-//					news.setImageName(imageName+"."+item.getName().split("\\.")[1]);
-//					String filePath=PropertiesUtil.getValue("imagePath")+imageName+"."+item.getName().split("\\.")[1];
-//					item.write(new File(filePath));
-//				} catch (Exception e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
+
+				List<SystemConfig> configs = new ArrayList<SystemConfig>();
+
+				// configLogoId、fileLogoImage、imgLogo、imgPreLogo
+				String tmpContent = "";
+				if (StringUtil.isNotEmpty(map.get("fileLogoImage"))) {
+					// tmpContent = map.get("fileLogoImage").split("/")[1];
+					tmpContent = map.get("fileLogoImage");
+				}
+				configs.add(
+						getSystemConfig(map.get("configLogoId"), ISystemConfig.CONFIG_MODULE_LOGO, tmpContent, "", ""));
+
+				// systemId1、systemType1、systemDesc1、systemUrl1
+				configs.add(getSystemConfig(map.get("systemId1"), ISystemConfig.CONFIG_MODULE_SYSTEM1,
+						map.get("systemUrl1"), map.get("systemDesc1"), map.get("systemType1")));
+
+				// systemId2、systemType2、systemDesc2、systemUrl2
+				configs.add(getSystemConfig(map.get("systemId2"), ISystemConfig.CONFIG_MODULE_SYSTEM2,
+						map.get("systemUrl2"), map.get("systemDesc2"), map.get("systemType2")));
+
+				// systemId3、systemType3、systemDesc3、systemUrl3
+				configs.add(getSystemConfig(map.get("systemId3"), ISystemConfig.CONFIG_MODULE_SYSTEM3,
+						map.get("systemUrl3"), map.get("systemDesc3"), map.get("systemType3")));
+
+				// systemId4、systemType4、systemDesc4、systemUrl4
+				configs.add(getSystemConfig(map.get("systemId4"), ISystemConfig.CONFIG_MODULE_SYSTEM4,
+						map.get("systemUrl4"), map.get("systemDesc4"), map.get("systemType4")));
+
+				// serviceSupportId、serviceSupport
+				configs.add(getSystemConfig(map.get("serviceSupportId"), ISystemConfig.CONFIG_MODULE_SERVICES,
+						map.get("serviceSupport"), "", ""));
+
+				SystemConfigBO.getInstance().save(configs);
 			}
-		}
-		
-		
-		Connection con=null;
-		try{
-			con=dbUtil.getCon();
-			systemConfigDao.saveConfig(con, config);
-			
-//			if(news.getNewsId()!=0){
-//				newsDao.newsUpdate(con, news);
-//			}else{
-//				newsDao.newsAdd(con, news);
-//			}
 			request.getRequestDispatcher("/config?action=config").forward(request, response);
-		}catch(Exception e){
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally{
-			try {
-				dbUtil.closeCon(con);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	}
-	
+
+	private SystemConfig getSystemConfig(String configIdStr, String name, String content, String description,
+			String options) {
+		SystemConfig config = new SystemConfig();
+		if (StringUtil.isNotEmpty(configIdStr)) {
+			config.setConfigId(Integer.parseInt(configIdStr));
+		}
+
+		config.setName(name);
+		config.setDescription(description);
+		config.setContent(content);
+		config.setOptions(options);
+
+		return config;
+	}
+
 	private void loadConfig(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Connection con=null;
-		try{
-			con=dbUtil.getCon();
-//			SystemConfig config = systemConfigDao.loadConfig(con);
-			
-//			request.setAttribute("config", config);
+		try {
+			List<SystemConfig> list = SystemConfigBO.getInstance().list();
+			SystemConfigs systemConfigs = new SystemConfigs(list);
+
+			request.setAttribute("systemConfigs", systemConfigs);
 			request.setAttribute("navCode", NavUtil.genNewsManageNavigation("系统管理", "系统配置"));
 			request.setAttribute("mainPage", "/background/system/systemConfig.jsp");
 			request.getRequestDispatcher("/background/mainTemp.jsp").forward(request, response);
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally{
-			try {
-				dbUtil.closeCon(con);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	private void newsPreSave(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String newsId=request.getParameter("newsId");
-		Connection con=null;
-		try{
-			con=dbUtil.getCon();
-			if(StringUtil.isNotEmpty(newsId)){
-				Information news=newsDao.getByInformationId(con, newsId);
-				request.setAttribute("news", news);
-			}
-			List<Channel> newsTypeList=newsTypeDao.newsTypeList(con);
-			request.setAttribute("newsTypeList", newsTypeList);
-			if(StringUtil.isNotEmpty(newsId)){
-				request.setAttribute("navCode", NavUtil.genNewsManageNavigation("资讯管理", "资讯修改"));				
-			}else{
-				request.setAttribute("navCode", NavUtil.genNewsManageNavigation("资讯管理", "资讯添加"));				
-			}
-			request.setAttribute("mainPage", "/background/news/newsSave.jsp");
-			request.getRequestDispatcher("/background/mainTemp.jsp").forward(request, response);
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally{
-			try {
-				dbUtil.closeCon(con);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	}
 
-	private void newsList(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String typeId=request.getParameter("typeId");
-		String page=request.getParameter("page");
-		if(StringUtil.isEmpty(page)){
-			page="1";
-		}
-		Connection con=null;
-		Information s_news=new Information();
-		if(StringUtil.isNotEmpty(typeId)){
-			s_news.setTypeId(Integer.parseInt(typeId));
-		}
-		try{
-			con=dbUtil.getCon();
-			int total=newsDao.newsCount(con, s_news,null,null);
-			PageBean pageBean=new PageBean(Integer.parseInt(page),Integer.parseInt(PropertiesUtil.getValue("pageSize")));
-			List<Information> newestNewsListWithType=newsDao.list(con, s_news, pageBean,null,null);
-			request.setAttribute("newestNewsListWithType", newestNewsListWithType);
-			request.setAttribute("navCode", NavUtil.genNewsListNavigation(newsTypeDao.getNewsTypeById(con, typeId).getChannelName(), typeId));
-			request.setAttribute("pageCode", PageUtil.getUpAndDownPagation(total, Integer.parseInt(page), Integer.parseInt(PropertiesUtil.getValue("pageSize")), typeId));
-			System.out.println(PageUtil.getUpAndDownPagation(total, Integer.parseInt(page), Integer.parseInt(PropertiesUtil.getValue("pageSize")), typeId));
-			
-			request.setAttribute("mainPage", "news/newsList.jsp");
-			request.getRequestDispatcher("foreground/newsTemp.jsp").forward(request, response);
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally{
-			try {
-				dbUtil.closeCon(con);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	private void newsShow(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String newsId=request.getParameter("newsId");
-		Connection con=null;
-		try{
-			con=dbUtil.getCon();
-			newsDao.click(con, newsId);
-			Information news=newsDao.getByInformationId(con, newsId);
-//			Comment s_comment=new Comment();
-//			s_comment.setNewsId(Integer.parseInt(newsId));
-//			List<Comment> commentList=commentDao.commentList(con, s_comment,null,null,null);
-//			request.setAttribute("commentList", commentList);
-			request.setAttribute("news", news);
-			request.setAttribute("pageCode", this.genUpAndDownPageCode(newsDao.getUpAndDownPageId(con, newsId)));
-			request.setAttribute("navCode", NavUtil.genNewsNavigation(news.getChannelName(), news.getTypeId()+"",news.getTitle()));
-			request.setAttribute("mainPage", "news/newsShow.jsp");
-			request.getRequestDispatcher("foreground/newsTemp.jsp").forward(request, response);
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally{
-			try {
-				dbUtil.closeCon(con);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	private String genUpAndDownPageCode(List<Information> upAndDownPage){
-		Information upNews=upAndDownPage.get(0);
-		Information downNews=upAndDownPage.get(1);
-		StringBuffer pageCode=new StringBuffer();
-		if(upNews.getNewsId()==-1){
-			pageCode.append("<p>上一篇：没有了</p>");
-		}else{
-			pageCode.append("<p>上一篇：<a href='news?action=show&newsId="+upNews.getNewsId()+"'>"+upNews.getTitle()+"</a></p>");
-		}
-		if(downNews.getNewsId()==-1){
-			pageCode.append("<p>下一篇：没有了</p>");
-		}else{
-			pageCode.append("<p>下一篇：<a href='news?action=show&newsId="+downNews.getNewsId()+"'>"+downNews.getTitle()+"</a></p>");
-		}
-		return pageCode.toString();
-	}
-	
-	
-	
-	
-//	private void newsSave(HttpServletRequest request, HttpServletResponse response)
-//			throws ServletException, IOException {
-//		FileItemFactory factory=new DiskFileItemFactory();
-//		ServletFileUpload upload=new ServletFileUpload(factory);
-//		List<FileItem> items=null;
-//		try {
-//			items=upload.parseRequest(request);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		Iterator itr=items.iterator();
-//		News news=new News();
-//		while(itr.hasNext()){
-//			FileItem item=(FileItem) itr.next();
-//			if(item.isFormField()){
-//				String fieldName=item.getFieldName();
-//				if("newsId".equals(fieldName)){
-//					if(StringUtil.isNotEmpty(item.getString("utf-8"))){
-//						news.setNewsId(Integer.parseInt(item.getString("utf-8")));
-//					}
-//				}
-//				if("title".equals(fieldName)){
-//					news.setTitle(item.getString("utf-8"));
-//				}
-//				if("content".equals(fieldName)){
-//					news.setContent(item.getString("utf-8"));
-//				}
-//				if("author".equals(fieldName)){
-//					news.setAuthor(item.getString("utf-8"));
-//				}
-//				if("typeId".equals(fieldName)){
-//					news.setTypeId(Integer.parseInt(item.getString("utf-8")));
-//				}
-//				if("isHead".equals(fieldName)){
-//					news.setIsHead(Integer.parseInt(item.getString("utf-8")));
-//				}
-//				if("isImage".equals(fieldName)){
-//					news.setIsImage(Integer.parseInt(item.getString("utf-8")));
-//				}
-//				if("isHot".equals(fieldName)){
-//					news.setIsHot(Integer.parseInt(item.getString("utf-8")));
-//				}
-//				if("imageName".equals(fieldName)&&news.getImageName()==null){
-//					if(StringUtil.isNotEmpty(item.getString("utf-8"))){
-//						news.setImageName(item.getString("utf-8").split("/")[1]);
-//					}
-//				}
-//			}else if(!"".equals(item.getName())){
-//				try {
-//					String imageName=DateUtil.getCurrentDateStr();
-//					news.setImageName(imageName+"."+item.getName().split("\\.")[1]);
-//					String filePath=PropertiesUtil.getValue("imagePath")+imageName+"."+item.getName().split("\\.")[1];
-//					item.write(new File(filePath));
-//				} catch (Exception e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//		
-//		
-//		Connection con=null;
-//		try{
-//			con=dbUtil.getCon();
-//			if(news.getNewsId()!=0){
-//				newsDao.newsUpdate(con, news);
-//			}else{
-//				newsDao.newsAdd(con, news);
-//			}
-//			request.getRequestDispatcher("/news?action=backList").forward(request, response);
-//		}catch(Exception e){
-//			e.printStackTrace();
-//		}finally{
-//			try {
-//				dbUtil.closeCon(con);
-//			} catch (Exception e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
-//	}
-	
+	public void loadLogo(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-	
-//	private void newsDelete(HttpServletRequest request,
-//			HttpServletResponse response) throws ServletException, IOException{
-//		String newsId=request.getParameter("newsId");
-//		Connection con=null;
-//		boolean delFlag;
-//		try{
-//			con=dbUtil.getCon();
-//			int delNums=newsDao.newsDelete(con, newsId);
-//			if(delNums==1){
-//				delFlag=true;
-//			}else{
-//				delFlag=false;
-//			}
-//			ResponseUtil.write(delFlag, response);
-//		}catch(Exception e){
-//			e.printStackTrace();
-//		}finally{
-//			try {
-//				dbUtil.closeCon(con);
-//			} catch (Exception e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
-//	}
-	
-	private void newsDelete(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException{
-		String newsIds=request.getParameter("newsIds");
-		Connection con=null;
-		boolean delFlag;
-		try{
-			con=dbUtil.getCon();
-			JSONObject result=new JSONObject();
-			int delNums=newsDao.deleteById(con, newsIds);
-			if(delNums>0){
-				result.put("success", true);
-				result.put("delNums", delNums);
-			}else{
-				result.put("errorMsg", "删除失败");
+		FileInputStream fis = null;
+		OutputStream os = null;
+		try {
+			String filePath = PropertiesUtil.getValue("imagePath") + "1503642659908.png";
+
+			fis = new FileInputStream(filePath);
+			os = response.getOutputStream();
+			int count = 0;
+			byte[] buffer = new byte[1024 * 8];
+			while ((count = fis.read(buffer)) != -1) {
+				os.write(buffer, 0, count);
+				os.flush();
 			}
-			ResponseUtil.write(result, response);
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			try {
-				dbUtil.closeCon(con);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
+				fis.close();
+				os.close();
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
+
+		// try{
+		// String filePath = PropertiesUtil.getValue("imagePath") +
+		// "1503642659908.png";
+		//
+		// String saveAddress =filePath;
+		// FileInputStream hFile = new FileInputStream(saveAddress); //
+		// 以byte流的方式打开文件 d:\1.gif
+		// int i=hFile.available(); //得到文件大小
+		// byte data[]=new byte[i];
+		// hFile.read(data); //读数据
+		// hFile.close();
+		// response.setContentType("image/*"); //设置返回的文件类型
+		// OutputStream toClient=response.getOutputStream(); //得到向客户端输出二进制数据的对象
+		// toClient.write(data); //输出数据
+		// toClient.close();
+		// }
+		// catch(IOException e) //错误处理
+		// {
+		// PrintWriter toClient = response.getWriter(); //得到向客户端输出文本的对象
+		// response.setContentType("text/html;charset=gb2312");
+		// toClient.write("无法打开图片!");
+		// toClient.close();
+		// }
 	}
-	
-//	private void newsBatchDelete(HttpServletRequest request, HttpServletResponse response)
-//			throws ServletException, IOException {
-//		String commentIds=request.getParameter("newsIds");
-//		Connection con=null;
-//		try{
-//			con=dbUtil.getCon();
-//			JSONObject result=new JSONObject();
-//			int delNums=commentDao.commentDelete(con, commentIds);
-//			if(delNums>0){
-//				result.put("success", true);
-//				result.put("delNums", delNums);
-//			}else{
-//				result.put("errorMsg", "删除失败");
-//			}
-//			ResponseUtil.write(result, response);
-//		}catch(Exception e){
-//			e.printStackTrace();
-//		}finally{
-//			try {
-//				dbUtil.closeCon(con);
-//			} catch (Exception e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
-//	}
 
 }
