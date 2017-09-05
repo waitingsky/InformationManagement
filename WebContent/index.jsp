@@ -122,41 +122,4 @@
 <jsp:include page="/foreground/common/foot.jsp"/>
 </div>
 </body>
-<script type="text/javascript">
-	var auto;
-	var index=0;
-	$('.tuhuo ul li').hover(function(){
-		clearTimeout(auto);
-		index=$(this).index();
-		move(index);
-		},function(){
-			auto=setTimeout('autogo('+index+')',3000);
-	});
-	
-	function autogo(){
-		if(index<5){
-			move(index);
-			index++;
-		}
-		else{
-			index=0;	
-			move(index);
-			index++;
-		}
-	}
-	function move(l){
-		var src=$('.tu_img').eq(index).attr('src');
-		$("#fou_img").css({  "opacity": "0"  });
-		$('#fou_img').attr('src',src);
-		$('#fou_img').stop(true).animate({ opacity: '1'},1000);
-		$('.tuhuo ul li').removeClass('fouce');
-		$('.tuhuo ul li').eq(index).addClass('fouce');
-		$('.tuhuo p').hide();
-		$('.tuhuo p').eq(index).show();
-		var ao=$('.tuhuo p').eq(index).children('a').attr('href');
-		$('#fou_img').parent('a').attr("href",ao);
-	}
-	autogo();
-	setInterval('autogo()',3000);
-</script>
 </html>

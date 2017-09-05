@@ -23,7 +23,7 @@
   
   <servlet-mapping>
   	<servlet-name>indexServlet</servlet-name>
-  	<url-pattern>/goIndex</url-pattern>
+  	<url-pattern>/portal.jsp</url-pattern>
   </servlet-mapping>
   
   <servlet>

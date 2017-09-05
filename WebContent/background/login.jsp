@@ -66,8 +66,8 @@
 	<div class="container">
 	    <form class="form-signin" action="${pageContext.request.contextPath}/user?action=adminLogin" method="post" onsubmit="return checkForm()">
 		    <div class="page-header">
-		 		<h1>报表门户系统 </h1>
-		 		<h1 class="pull-right"><small>后台管理</small></h1>
+		 		<h2>报表门户系统 </h2>
+		 		<h3 class="pull-right"><small>后台管理</small></h3>
 			</div>
 			<div class="form-group">
 			      	<input type="text" class="input-block-level" id="userName" name="userName" value="${userName }" placeholder="用户名">
