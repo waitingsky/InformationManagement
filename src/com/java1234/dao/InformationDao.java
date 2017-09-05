@@ -29,6 +29,8 @@ public class InformationDao {
 			news.setHead(rs.getBoolean("isHead"));
 //			news.setImageName(PropertiesUtil.getValue("userImage")+rs.getString("imageName"));
 			news.setHot(rs.getBoolean("isHot"));
+			news.setType(rs.getInt("type"));
+
 			newsList.add(news);
 		}
 		return newsList;
@@ -67,7 +69,7 @@ public class InformationDao {
 			news.setClickCount(rs.getInt("click"));
 			news.setHead(rs.getBoolean("isHead"));
 			news.setHot(rs.getBoolean("isHot"));
-
+			news.setType(rs.getInt("type"));
 			
 			
 //			news.setClick(rs.getInt());
@@ -122,7 +124,7 @@ public class InformationDao {
 //			news.setIsImage(rs.getInt("isImage"));
 //			news.setImageName(PropertiesUtil.getValue("userImage")+rs.getString("imageName"));
 			news.setHot(rs.getBoolean(10));
-			
+
 			news.setChannelName(rs.getString(11));
 
 		}

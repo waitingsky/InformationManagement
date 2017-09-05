@@ -26,7 +26,6 @@
   	<url-pattern>/goIndex</url-pattern>
   </servlet-mapping>
   
-  
   <servlet>
   	<servlet-name>informationServlet</servlet-name>
   	<servlet-class>com.java1234.web.InformationServlet</servlet-class>
@@ -38,16 +37,6 @@
   </servlet-mapping>
   
   <servlet>
-  	<servlet-name>commentServlet</servlet-name>
-  	<servlet-class>com.java1234.web.CommentServlet</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>commentServlet</servlet-name>
-  	<url-pattern>/comment</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
   	<servlet-name>userServlet</servlet-name>
   	<servlet-class>com.java1234.web.UserServlet</servlet-class>
   </servlet>
@@ -55,16 +44,6 @@
   <servlet-mapping>
   	<servlet-name>userServlet</servlet-name>
   	<url-pattern>/user</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-  	<servlet-name>linkServlet</servlet-name>
-  	<servlet-class>com.java1234.web.LinkServlet</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>linkServlet</servlet-name>
-  	<url-pattern>/link</url-pattern>
   </servlet-mapping>
   
   <servlet>

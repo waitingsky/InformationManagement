@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -101,18 +102,23 @@ public class InformationServlet extends HttpServlet {
 			ApplicationBO.getInstance().refreshApplication(request.getSession().getServletContext());
 
 			Information information = InformationBO.getInstance().getById(informationId);
-			// Comment s_comment=new Comment();
-			// s_comment.setNewsId(Integer.parseInt(newsId));
-			// List<Comment> commentList=commentDao.commentList(con,
-			// s_comment,null,null,null);
-			// request.setAttribute("commentList", commentList);
-			request.setAttribute("information", information);
-			request.setAttribute("pageCode",
-					this.genUpAndDownPageCode(InformationBO.getInstance().getUpAndDownPageId(informationId)));
-			request.setAttribute("navCode", NavUtil.genNewsNavigation(information.getChannelName(),
-					information.getChannelId() + "", information.getTitle()));
-			request.setAttribute("mainPage", "news/newsShow.jsp");
-			request.getRequestDispatcher("foreground/newsTemp.jsp").forward(request, response);
+			
+			if(information.getType()==0){
+				request.setAttribute("information", information);
+				request.setAttribute("pageCode",
+						this.genUpAndDownPageCode(InformationBO.getInstance().getUpAndDownPageId(informationId)));
+				request.setAttribute("navCode", NavUtil.genNewsNavigation(information.getChannelName(),
+						information.getChannelId() + "", information.getTitle()));
+				request.setAttribute("mainPage", "news/newsShow.jsp");
+				request.getRequestDispatcher("foreground/newsTemp.jsp").forward(request, response);
+			}else if(information.getType()==1){
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/file?action=fileDownload&fileName="+information.getContent());
+				dispatcher.forward(request, response);
+			}else if(information.getType()==2){
+//				RequestDispatcher dispatcher = request.getRequestDispatcher(information.getContent());
+//				dispatcher.forward(request, response);
+				response.sendRedirect(information.getContent());
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

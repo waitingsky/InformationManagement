@@ -95,7 +95,17 @@
 				<div class="datas">
 					<ul>
 		</c:if>
-		<li><fmt:formatDate value="${tmpInfo.publishDate }" type="date" pattern="MM-dd"/>&nbsp;<a href="information?action=show&informationId=${tmpInfo.informationId }" title="${tmpInfo.title }">${fn:substring(tmpInfo.title,0,18) }</a></li>
+		
+<%-- 		<c:if test="${tmpInfo.type==0}"> --%>
+				<li><fmt:formatDate value="${tmpInfo.publishDate }" type="date" pattern="MM-dd"/>&nbsp;<a href="information?action=show&informationId=${tmpInfo.informationId }" title="${tmpInfo.title }" target="_blank">${fn:substring(tmpInfo.title,0,18) }</a></li>
+<%-- 		</c:if> --%>
+<%-- 		<c:if test="${tmpInfo.type==1}"> --%>
+<%-- 				<li><fmt:formatDate value="${tmpInfo.publishDate }" type="date" pattern="MM-dd"/>&nbsp;<a href="file?action=fileDownload&fileName=${tmpInfo.content }" title="${tmpInfo.title }">${fn:substring(tmpInfo.title,0,18) }</a></li> --%>
+<%-- 		</c:if> --%>
+<%-- 		<c:if test="${tmpInfo.type==2}"> --%>
+<%-- 				<li><fmt:formatDate value="${tmpInfo.publishDate }" type="date" pattern="MM-dd"/>&nbsp;<a href="${tmpInfo.content }" title="${tmpInfo.title }">${fn:substring(tmpInfo.title,0,18) }</a></li> --%>
+<%-- 		</c:if> --%>
+		
 		<c:if test="${oneStatus.last }">
 					</ul>
 						</div>

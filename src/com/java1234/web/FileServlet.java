@@ -185,7 +185,7 @@ public class FileServlet extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			// 获得请求文件名
-			String filename = request.getParameter("filename");
+			String filename = request.getParameter("fileName");
 
 			// 设置文件MIME类型
 			response.setContentType(getServletContext().getMimeType(filename));

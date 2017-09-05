@@ -39,7 +39,7 @@
 					<td width="80px" valign="top">
 						<label>Logo 配置：</label>
 					</td>
-					<td>
+					<td valign="top">
 <!-- 						<ul class="nav nav-list" id="attachment"> -->
 <!-- 						  <li class=""> -->
 <!-- 						  	<span class="add-on"><i class="icon-file"></i></span> -->
