@@ -168,8 +168,9 @@ public class SystemConfigServlet extends HttpServlet {
 
 			request.setAttribute("systemConfigs", systemConfigs);
 			request.setAttribute("navCode", NavUtil.genNewsManageNavigation("系统管理", "系统配置"));
-			request.setAttribute("mainPage", "/admin/system/systemConfig.jsp");
-			request.getRequestDispatcher("/admin/adminTemplate.jsp").forward(request, response);
+			
+			request.setAttribute("mainPage",IUrl.ADMIN_SYSTEM_CONFIG);
+			request.getRequestDispatcher(IUrl.ADMIN_MAIN).forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

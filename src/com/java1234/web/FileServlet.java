@@ -116,35 +116,6 @@ public class FileServlet extends HttpServlet {
 			out.println("</script>");
 			out.flush();
 			return;
-
-			// response.setContentType("text/html;charset=UTF-8");
-			// request.setCharacterEncoding("UTF-8");
-			// response.setCharacterEncoding("UTF-8");
-			// PrintWriter out = response.getWriter();
-			// FileItemFactory factory = new DiskFileItemFactory();
-			// ServletFileUpload upload = new ServletFileUpload(factory);
-			// try {
-			// List<FileItem> list = upload.parseRequest(request);
-			// for (FileItem fileItem : list) {
-			// String imageName = DateUtil.getCurrentDateStr();
-			// File file = new File(
-			// PropertiesUtil.getValue("imagePath") + imageName + "." +
-			// fileItem.getName().split("\\.")[1]);
-			// String newPath = PropertiesUtil.getValue("imageFile") + "/" +
-			// imageName + "."
-			// + fileItem.getName().split("\\.")[1];
-			// fileItem.write(file);
-			// String callback = request.getParameter("CKEditorFuncNum");
-			// out.println("<script type=\"text/javascript\">");
-			// out.println("window.parent.CKEDITOR.tools.callFunction(" +
-			// callback +
-			// ",'" + newPath + "',''" + ")");
-			// out.println("</script>");
-			// out.flush();
-			// }
-			// } catch (Exception e) {
-			// e.printStackTrace();
-			// }
 		} catch (FileUploadException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -215,39 +186,6 @@ public class FileServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		// if(!file.exists()){
-		// request.setAttribute("msg","<script
-		// type=\"text/javascript\">alert(\"指定的文件不存在！\");</script>");
-		// request.getRequestDispatcher(action).forward(request, response);
-		// }else{
-		// response.reset();
-		// //将 文件流写入到前端浏览器
-		// response.setHeader("Content-disposition",
-		// "attachment;filename="+convertFileName(filename));
-		// ServletOutputStream sops=response.getOutputStream();
-		// FileInputStream fis=new FileInputStream(file);
-		// copyStream(fis,sops,true);
-		// fis.close();
-		// sops.close();
-		// fis=null;
-		// sops=null;
-		// file=null;
-		// }
-
-		// //告诉浏览器是以下载的方法获取到资源
-		// //告诉浏览器以此种编码来解析URLEncoder.encode(realPath, "utf-8"))
-		// response.setHeader("content-disposition","attachment;
-		// filename="+URLEncoder.encode(realPath, "utf-8"));
-		// //获取到所下载的资源
-		// FileInputStream fis = new FileInputStream(path);
-		// int len = 0;
-		// byte [] buf = new byte[1024];
-		// while((len=fis.read(buf))!=-1){
-		// response.getOutputStream().write(buf,0,len);
-		// }
-		// }
-
 	}
 
 	public void configLogo(HttpServletRequest request, HttpServletResponse response) throws IOException {

@@ -76,7 +76,7 @@ public class IndexServlet extends HttpServlet {
 //			SystemConfig config = configDao.loadConfig(con);
 //			request.setAttribute("config", config);
 
-			request.getRequestDispatcher("index.jsp").forward(request, response);
+			request.getRequestDispatcher(IUrl.PORTAL_INDEX).forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

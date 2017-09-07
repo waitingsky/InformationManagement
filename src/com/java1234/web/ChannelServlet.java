@@ -59,8 +59,8 @@ public class ChannelServlet extends HttpServlet{
 			}else{
 				request.setAttribute("navCode", NavUtil.genNewsManageNavigation("资讯频道管理", "资讯频道添加"));
 			}
-			request.setAttribute("mainPage", "/admin/newsType/newsTypeSave.jsp");
-			request.getRequestDispatcher("/admin/adminTemplate.jsp").forward(request, response);
+			request.setAttribute("mainPage", IUrl.ADMIN_TYPE_EDIT);
+			request.getRequestDispatcher(IUrl.ADMIN_MAIN).forward(request, response);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -71,16 +71,16 @@ public class ChannelServlet extends HttpServlet{
 		String channelId=request.getParameter("channelId");
 		String channelName=request.getParameter("channelName");
 		
-		Channel newsType=new Channel(channelName);
+		Channel channel=new Channel(channelName);
 		
 		if(StringUtil.isNotEmpty(channelId)){
-			newsType.setChannelId(Integer.parseInt(channelId));
+			channel.setChannelId(Integer.parseInt(channelId));
 		}
 		try{
 			if(StringUtil.isNotEmpty(channelId)){
-				ChannelBO.getInstance().update(newsType);
+				ChannelBO.getInstance().update(channel);
 			}else{
-				ChannelBO.getInstance().save(newsType);
+				ChannelBO.getInstance().save(channel);
 			}
 			ApplicationBO.getInstance().refreshApplication(request.getSession().getServletContext());
 			request.getRequestDispatcher("/channel?action=adminList").forward(request, response);
@@ -96,8 +96,10 @@ public class ChannelServlet extends HttpServlet{
 			List<Channel> channelList=ChannelBO.getInstance().list();
 			request.setAttribute("channelList", channelList);
 			request.setAttribute("navCode", NavUtil.genNewsManageNavigation("资讯频道管理", "资讯频道维护"));
-			request.setAttribute("mainPage", "/admin/newsType/newsTypeList.jsp");
-			request.getRequestDispatcher("/admin/adminTemplate.jsp").forward(request, response);
+			
+			request.setAttribute("mainPage", IUrl.ADMIN_TYPE_LIST);
+			request.getRequestDispatcher(IUrl.ADMIN_MAIN).forward(request, response);
+
 		}catch(Exception e){
 			e.printStackTrace();
 		}		

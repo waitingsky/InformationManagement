@@ -6,7 +6,6 @@ import java.util.List;
 public class SystemConfigs implements ISystemConfig {
 
 	private HashMap<String, SystemConfig> map = new HashMap<String, SystemConfig>();
-	// private List<SystemConfig> list = new ArrayList<SystemConfig>();
 
 	public SystemConfigs(List<SystemConfig> list) {
 		// this.list = list;
@@ -16,22 +15,6 @@ public class SystemConfigs implements ISystemConfig {
 			}
 		}
 	}
-
-	// public HashMap<String, SystemConfig> getMap() {
-	// return map;
-	// }
-	//
-	// public void setMap(HashMap<String, SystemConfig> map) {
-	// this.map = map;
-	// }
-	//
-	// public List<SystemConfig> getList() {
-	// return list;
-	// }
-	//
-	// public void setList(List<SystemConfig> list) {
-	// this.list = list;
-	// }
 
 	public SystemConfig getServiceSupport() {
 		if (map.containsKey(SystemConfigs.CONFIG_MODULE_SERVICES)) {

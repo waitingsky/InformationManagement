@@ -88,8 +88,8 @@ public class InformationServlet extends HttpServlet {
 			System.out.println(PageUtil.getUpAndDownPagation(total, Integer.parseInt(page),
 					Integer.parseInt(PropertiesUtil.getValue("pageSize")), channelId));
 
-			request.setAttribute("mainPage", "news/newsList.jsp");
-			request.getRequestDispatcher("infoTemplate.jsp").forward(request, response);
+			request.setAttribute("mainPage", IUrl.PORTAL_INFO_LIST);
+			request.getRequestDispatcher(IUrl.PORTAL_MAIN).forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -109,8 +109,9 @@ public class InformationServlet extends HttpServlet {
 						this.genUpAndDownPageCode(InformationBO.getInstance().getUpAndDownPageId(informationId)));
 				request.setAttribute("navCode", NavUtil.genNewsNavigation(information.getChannelName(),
 						information.getChannelId() + "", information.getTitle()));
-				request.setAttribute("mainPage", "news/newsShow.jsp");
-				request.getRequestDispatcher("infoTemplate.jsp").forward(request, response);
+				
+				request.setAttribute("mainPage", IUrl.PORTAL_INFO_SHOW);
+				request.getRequestDispatcher(IUrl.PORTAL_MAIN).forward(request, response);
 			}else if(information.getType()==1){
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/file?action=fileDownload&fileName="+information.getContent());
 				dispatcher.forward(request, response);
@@ -157,8 +158,9 @@ public class InformationServlet extends HttpServlet {
 			} else {
 				request.setAttribute("navCode", NavUtil.genNewsManageNavigation("资讯管理", "资讯添加"));
 			}
-			request.setAttribute("mainPage", "/admin/news/newsSave.jsp");
-			request.getRequestDispatcher("/admin/adminTemplate.jsp").forward(request, response);
+
+			request.setAttribute("mainPage", IUrl.ADMIN_INFO_EDIT);
+			request.getRequestDispatcher(IUrl.ADMIN_MAIN).forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -326,8 +328,9 @@ public class InformationServlet extends HttpServlet {
 			request.setAttribute("pageCode", pageCode);
 			request.setAttribute("informationList", informationList);
 			request.setAttribute("navCode", NavUtil.genNewsManageNavigation("资讯管理", "资讯维护"));
-			request.setAttribute("mainPage", "/admin/news/newsList.jsp");
-			request.getRequestDispatcher("/admin/adminTemplate.jsp").forward(request, response);
+			
+			request.setAttribute("mainPage",IUrl.ADMIN_INFO_LIST);
+			request.getRequestDispatcher(IUrl.ADMIN_MAIN).forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
