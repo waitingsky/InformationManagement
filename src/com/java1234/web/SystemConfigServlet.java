@@ -181,8 +181,20 @@ public class SystemConfigServlet extends HttpServlet {
 		FileInputStream fis = null;
 		OutputStream os = null;
 		try {
-			String filePath = PropertiesUtil.getValue("imagePath") + "1503642659908.png";
-
+			
+			List<SystemConfig> list = SystemConfigBO.getInstance().list();
+			SystemConfigs systemConfigs = new SystemConfigs(list);
+			
+			String filePath = "";
+			SystemConfig imageConfig = systemConfigs.getImageLogo();
+			
+			if(imageConfig!=null && imageConfig.getContent()!=null && !imageConfig.getContent().equals("")){
+				filePath = PropertiesUtil.getValue("imagePath") +imageConfig.getContent();
+			}else{
+				String dir = getServletContext().getRealPath("/");  
+				filePath = dir + "/resources/images/logo.png";
+			} 
+			
 			fis = new FileInputStream(filePath);
 			os = response.getOutputStream();
 			int count = 0;

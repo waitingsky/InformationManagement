@@ -25,7 +25,7 @@
 </script>
 <div class="row-fluid">
 	<div class="span12 logo">
-		<img src="${pageContext.request.contextPath}/images/logo.png">
+		<img src="config?action=configLogo">
 	</div>
 </div>
 <div class="row-fluid">

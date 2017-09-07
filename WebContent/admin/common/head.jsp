@@ -30,7 +30,7 @@
 	<div class="span12">
 		<div>
 			<div class="headLeft logo">
-				<img src="${pageContext.request.contextPath}/images/logo.png"/>
+				<img src="config?action=configLogo">
 			</div>
 			<div class="headRight">
 				欢迎管理员：<font color="red">${currentManageUser.userName }</font>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:logout()">[&nbsp;退出系统&nbsp;]</a>&nbsp;&nbsp;&nbsp;&nbsp;<font id="today" class="currentDateTime"></font>
