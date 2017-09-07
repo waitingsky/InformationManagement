@@ -59,8 +59,8 @@ public class ChannelServlet extends HttpServlet{
 			}else{
 				request.setAttribute("navCode", NavUtil.genNewsManageNavigation("资讯频道管理", "资讯频道添加"));
 			}
-			request.setAttribute("mainPage", "/background/newsType/newsTypeSave.jsp");
-			request.getRequestDispatcher("/background/mainTemp.jsp").forward(request, response);
+			request.setAttribute("mainPage", "/admin/newsType/newsTypeSave.jsp");
+			request.getRequestDispatcher("/admin/adminTemplate.jsp").forward(request, response);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -96,8 +96,8 @@ public class ChannelServlet extends HttpServlet{
 			List<Channel> channelList=ChannelBO.getInstance().list();
 			request.setAttribute("channelList", channelList);
 			request.setAttribute("navCode", NavUtil.genNewsManageNavigation("资讯频道管理", "资讯频道维护"));
-			request.setAttribute("mainPage", "/background/newsType/newsTypeList.jsp");
-			request.getRequestDispatcher("/background/mainTemp.jsp").forward(request, response);
+			request.setAttribute("mainPage", "/admin/newsType/newsTypeList.jsp");
+			request.getRequestDispatcher("/admin/adminTemplate.jsp").forward(request, response);
 		}catch(Exception e){
 			e.printStackTrace();
 		}		

@@ -7,15 +7,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>报表系统门户</title>
-<link href="${pageContext.request.contextPath}/style/news.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-<script src="${pageContext.request.contextPath}/bootstrap/js/jQuery.js"></script>
-<script src="${pageContext.request.contextPath}/bootstrap/js/bootstrap.js"></script>
+<link href="${pageContext.request.contextPath}/resources/css/news.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jQuery.js"></script>
 </head>
 <body>
 <div class="container">
-<jsp:include page="/foreground/common/head.jsp"/>
+<jsp:include page="/common/head.jsp"/>
 
 <div class="row-fluid">
 	<div class="span3 custom-system" >
@@ -118,8 +118,8 @@
 	</c:if>
 </c:forEach>
 
-<jsp:include page="/foreground/common/link.jsp"/>
-<jsp:include page="/foreground/common/foot.jsp"/>
+<jsp:include page="/common/link.jsp"/>
+<jsp:include page="/common/foot.jsp"/>
 </div>
 </body>
 </html>

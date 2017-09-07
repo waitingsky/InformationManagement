@@ -89,7 +89,7 @@ public class InformationServlet extends HttpServlet {
 					Integer.parseInt(PropertiesUtil.getValue("pageSize")), channelId));
 
 			request.setAttribute("mainPage", "news/newsList.jsp");
-			request.getRequestDispatcher("foreground/newsTemp.jsp").forward(request, response);
+			request.getRequestDispatcher("infoTemplate.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -110,7 +110,7 @@ public class InformationServlet extends HttpServlet {
 				request.setAttribute("navCode", NavUtil.genNewsNavigation(information.getChannelName(),
 						information.getChannelId() + "", information.getTitle()));
 				request.setAttribute("mainPage", "news/newsShow.jsp");
-				request.getRequestDispatcher("foreground/newsTemp.jsp").forward(request, response);
+				request.getRequestDispatcher("infoTemplate.jsp").forward(request, response);
 			}else if(information.getType()==1){
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/file?action=fileDownload&fileName="+information.getContent());
 				dispatcher.forward(request, response);
@@ -157,8 +157,8 @@ public class InformationServlet extends HttpServlet {
 			} else {
 				request.setAttribute("navCode", NavUtil.genNewsManageNavigation("资讯管理", "资讯添加"));
 			}
-			request.setAttribute("mainPage", "/background/news/newsSave.jsp");
-			request.getRequestDispatcher("/background/mainTemp.jsp").forward(request, response);
+			request.setAttribute("mainPage", "/admin/news/newsSave.jsp");
+			request.getRequestDispatcher("/admin/adminTemplate.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -326,8 +326,8 @@ public class InformationServlet extends HttpServlet {
 			request.setAttribute("pageCode", pageCode);
 			request.setAttribute("informationList", informationList);
 			request.setAttribute("navCode", NavUtil.genNewsManageNavigation("资讯管理", "资讯维护"));
-			request.setAttribute("mainPage", "/background/news/newsList.jsp");
-			request.getRequestDispatcher("/background/mainTemp.jsp").forward(request, response);
+			request.setAttribute("mainPage", "/admin/news/newsList.jsp");
+			request.getRequestDispatcher("/admin/adminTemplate.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
-<script src="${pageContext.request.contextPath}/js/ckeditor/ckeditor.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/ckeditor/ckeditor.js"></script>
 </head>
 <body>
 <textarea class="ckeditor" id="content" name="content"></textarea>
