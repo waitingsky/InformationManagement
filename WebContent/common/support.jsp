@@ -6,7 +6,7 @@
 			<div class="linkHeader">服务与支持</div>
 			
 			<div class="datas" >
-				${config.serviceSupport}
+				${config.serviceSupport.content}
 			</div>
 		</div>
 	</div>

@@ -38,6 +38,24 @@ public class SystemConfigBO {
 		}
 		return null;
 	}
+	
+	public SystemConfig get(String id) throws Exception {
+		Connection con = null;
+		try {
+			con = dbUtil.getCon();
+			return (new SystemConfigDao()).get(con,id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				dbUtil.closeCon(con);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
 
 	public int save(List<SystemConfig> configs) throws Exception {
 		Connection con = null;

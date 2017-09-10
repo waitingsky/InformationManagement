@@ -76,4 +76,15 @@
   	<url-pattern>/file</url-pattern>
   </servlet-mapping>
   
+    <servlet>
+  	<servlet-name>customSystemJumpServlet</servlet-name>
+  	<servlet-class>com.java1234.web.CustomSystemJumpServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>customSystemJumpServlet</servlet-name>
+  	<url-pattern>/system</url-pattern>
+  </servlet-mapping>
+  
+  
 </web-app>

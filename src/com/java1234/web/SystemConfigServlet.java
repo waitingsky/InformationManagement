@@ -20,6 +20,7 @@ import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import com.java1234.dao.ApplicationBO;
 import com.java1234.dao.SystemConfigBO;
 import com.java1234.model.ISystemConfig;
 import com.java1234.model.SystemConfig;
@@ -137,6 +138,8 @@ public class SystemConfigServlet extends HttpServlet {
 						map.get("serviceSupport"), "", ""));
 
 				SystemConfigBO.getInstance().save(configs);
+				
+				ApplicationBO.getInstance().refreshConfigs(request.getSession().getServletContext());
 			}
 			request.getRequestDispatcher("/config?action=config").forward(request, response);
 

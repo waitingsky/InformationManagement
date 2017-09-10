@@ -1,7 +1,6 @@
 package com.java1234.web;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,19 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.java1234.dao.ChannelBO;
 import com.java1234.dao.InformationBO;
-import com.java1234.dao.SystemConfigDao;
 import com.java1234.model.Channel;
 import com.java1234.model.Information;
-import com.java1234.model.SystemConfig;
-import com.java1234.util.DbUtil;
 import com.java1234.util.StringUtil;
 
 public class IndexServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	DbUtil dbUtil = new DbUtil();
-	SystemConfigDao configDao = new SystemConfigDao();
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -37,9 +31,7 @@ public class IndexServlet extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 
-		Connection con = null;
 		try {
-			con = dbUtil.getCon();
 
 			List<Channel> channelList = ChannelBO.getInstance().list();
 
@@ -80,11 +72,6 @@ public class IndexServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				dbUtil.closeCon(con);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 		}
 	}
 

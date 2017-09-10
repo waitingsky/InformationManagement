@@ -35,6 +35,30 @@ public class SystemConfigDao {
 
 		return result;
 	}
+	
+	public SystemConfig get(Connection con,String id) throws Exception {
+		String sql = "select config_id,name,content,description,options,update_time from sys_portalconfig where config_id=?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, id);
+		ResultSet rs = pstmt.executeQuery();
+
+		if (rs.next()) {
+			SystemConfig result = new SystemConfig();
+
+			result.setConfigId(rs.getInt(1));
+			result.setName(rs.getString(2));
+			result.setContent(rs.getString(3));
+
+			result.setDescription(rs.getString(4));
+			result.setOptions(rs.getString(5));
+			result.setUpdateTime(DateUtil.formatString(rs.getString(6), "yyyy-MM-dd HH:mm:ss"));
+			
+			return result;
+		}
+
+		return null;
+	}
+
 
 	public int save(Connection con, List<SystemConfig> configs) throws Exception {
 		String updateSql = "update sys_portalconfig set content=?,description=?,options=?,update_time=now() where config_id=? and name=?";

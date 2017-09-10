@@ -21,12 +21,47 @@
 	<div class="span3 custom-system" >
 		<ul class="nav nav-list">
 			<li class="nav-header">系统清单</li>
-			<li class="custom-system-item">
-				<a target="_blank" href="information?action=show&informationId=${newestNews.informationId }" title="海波龙预算系统">
-					<i class="icon-th-large"></i>
-					海波龙预算系统
-				</a>
-			</li>
+				<c:if test="${!empty config.customSystem1 && config.customSystem1.options!=-1}">
+					<li class="custom-system-item">
+						<a target="_blank" href="system?action=jump&configId=${config.customSystem1.configId }" title="${config.customSystem1.description}">
+							<i class="icon-th-large"></i>
+							${config.customSystem1.description}
+						</a>
+					</li>
+				</c:if>
+				<c:if test="${!empty config.customSystem2 && config.customSystem2.options!=-1}">
+					<li class="custom-system-item">
+						<a target="_blank" href="system?action=jump&configId=${config.customSystem2.configId }" title="${config.customSystem2.description}">
+							<i class="icon-th-large"></i>
+							${config.customSystem2.description}
+						</a>
+					</li>
+				</c:if>
+				<c:if test="${!empty config.customSystem3 && config.customSystem3.options!=-1}">
+					<li class="custom-system-item">
+						<a target="_blank" href="system?action=jump&configId=${config.customSystem3.configId }" title="${config.customSystem3.description}">
+							<i class="icon-th-large"></i>
+							${config.customSystem3.description}
+						</a>
+					</li>
+				</c:if>
+				<c:if test="${!empty config.customSystem4 && config.customSystem4.options!=-1}">
+					<li class="custom-system-item">
+						<a target="_blank" href="system?action=jump&configId=${config.customSystem4.configId }" title="${config.customSystem4.description}">
+							<i class="icon-th-large"></i>
+							${config.customSystem4.description}
+						</a>
+					</li>
+				</c:if>
+			
+			
+			
+<!-- 			<li class="custom-system-item"> -->
+<%-- 				<a target="_blank" href="information?action=show&informationId=${newestNews.informationId }" title="海波龙预算系统"> --%>
+<!-- 					<i class="icon-th-large"></i> -->
+<!-- 					海波龙预算系统 -->
+<!-- 				</a> -->
+<!-- 			</li> -->
 <!-- 			<li class="custom-system-item"> -->
 <%-- 				<a target="_blank" href="information?action=show&informationId=${newestNews.informationId }" title="海波龙合并系统"> --%>
 <!-- 				<i class="icon-th-large"></i> -->
@@ -37,11 +72,11 @@
 <!-- 				<i class="icon-th-large"></i> -->
 <!-- 				企业合并报表系统</a> -->
 <!-- 			</li> -->
-			<li class="custom-system-item">
-				<a target="_blank" href="information?action=show&informationId=${newestNews.informationId }" title="企业预算报表系统">	
-				<i class="icon-th-large"></i>
-				企业预算报表系统</a>
-			</li>
+<!-- 			<li class="custom-system-item"> -->
+<%-- 				<a target="_blank" href="information?action=show&informationId=${newestNews.informationId }" title="企业预算报表系统">	 --%>
+<!-- 				<i class="icon-th-large"></i> -->
+<!-- 				企业预算报表系统</a> -->
+<!-- 			</li> -->
 		</ul>
 	</div>
 	<div class="span6 newsHeader_list">
@@ -118,7 +153,10 @@
 	</c:if>
 </c:forEach>
 
-<jsp:include page="/common/link.jsp"/>
+<c:if test="${!empty config.serviceSupport && !empty config.serviceSupport.content}">
+	<jsp:include page="/common/support.jsp"/>
+</c:if>
+
 <jsp:include page="/common/foot.jsp"/>
 </div>
 </body>

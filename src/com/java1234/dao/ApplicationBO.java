@@ -6,6 +6,8 @@ import javax.servlet.ServletContext;
 
 import com.java1234.model.Channel;
 import com.java1234.model.Information;
+import com.java1234.model.SystemConfig;
+import com.java1234.model.SystemConfigs;
 
 public class ApplicationBO {
 	private static ApplicationBO instance;
@@ -30,6 +32,10 @@ public class ApplicationBO {
 
 			List<Information> popularList = InformationBO.getInstance().listPopular(8);
 			application.setAttribute("popularList", popularList);
+			
+			List<SystemConfig> list = SystemConfigBO.getInstance().list();
+			SystemConfigs systemConfigs = new SystemConfigs(list);
+			application.setAttribute("config", systemConfigs);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -83,6 +89,15 @@ public class ApplicationBO {
 			e.printStackTrace();
 		}
 	}
-
+	
+	public void refreshConfigs(ServletContext application) {
+		try {
+			List<SystemConfig> list = SystemConfigBO.getInstance().list();
+			SystemConfigs systemConfigs = new SystemConfigs(list);
+			application.setAttribute("config", systemConfigs);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 }
