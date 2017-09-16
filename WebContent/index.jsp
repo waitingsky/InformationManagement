@@ -10,8 +10,8 @@
 <link href="${pageContext.request.contextPath}/resources/css/news.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-<script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/jQuery.js"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.js"></script>
 </head>
 <body>
 <div class="container">

@@ -86,5 +86,15 @@
   	<url-pattern>/system</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>unifiedLoginServlet</servlet-name>
+  	<servlet-class>com.java1234.web.UnifiedLoginServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>unifiedLoginServlet</servlet-name>
+  	<url-pattern>/unifiedLogin</url-pattern>
+  </servlet-mapping>
+  
   
 </web-app>
